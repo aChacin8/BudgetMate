@@ -6,11 +6,11 @@ import colors from 'colors'
 const connectDB = async () => {
     try {
         await db.authenticate()
-        db.sync()
+        db.sync() //Crea las tablas en automatico
         
         console.log(colors.bgGreen('Database connected'));  
     } catch (error) {
-        const err = new Error(error)
+        const err = new Error('Failed to connect to the database')
         console.log(colors.bgRed(err.message));
     }
 }
