@@ -8,5 +8,6 @@ export const db = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
     models: [__dirname + '/../models/**/*'], 
     host: DB_HOST,
     dialect: 'postgres',
+    logging: false
 })
 
