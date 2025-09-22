@@ -8,12 +8,12 @@ class Budget extends Model {
     @Column({
         type: DataType.STRING(100),
         })
-    name: string
+    declare name: string
 
     @Column({
         type: DataType.DECIMAL(10,2)
     })
-    amount: number
+    declare amount: number
 }
 
 export default Budget;
