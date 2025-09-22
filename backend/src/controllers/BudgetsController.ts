@@ -18,7 +18,9 @@ export class BudgetController {
 
     static getBudgets = async (req: Request, res: Response) => {
         try {
-            const budgets = await Budget.findAll()
+            const budgets = await Budget.findAll({
+                order: [['amount', 'DESC']],
+            })
             if (!budgets){
             return res.status(404).json({message: 'Budgets not found'})
         }
@@ -31,7 +33,8 @@ export class BudgetController {
 
     static getBudgetById = async (req: Request, res: Response) => {
         try {
-            const budget = await Budget.findOne({where: {id: req.params.id}})
+            const { id } = req.params
+            const budget = await Budget.findOne({where: {id}})
         if (!budget){
             return res.status(404).json({message: 'Budget not found'})
         }
@@ -44,7 +47,8 @@ export class BudgetController {
 
     static updateBudget = async (req: Request, res: Response) => {
         try {
-            const budget = await Budget.findOne({where: {id: req.params.id}})
+            const { id } = req.params
+            const budget = await Budget.findOne({where: {id}})
             if (budget){
                 await budget.update(req.body)
             } else {
@@ -59,7 +63,8 @@ export class BudgetController {
 
     static deleteBudget = async (req: Request, res: Response) => {
         try {
-            const budget = await Budget.findOne({where: {id:req.params.id}})
+            const { id } = req.params
+            const budget = await Budget.findOne({where: {id}})
             if (budget){
                 await budget.destroy()
             } else {
