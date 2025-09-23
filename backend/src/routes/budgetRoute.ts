@@ -3,16 +3,12 @@ import { body, param } from 'express-validator';
 
 import { BudgetController } from '../controllers/BudgetsController';
 import { handleInputErrors } from '../middlewares/hadleInputErrors';
+import { validateBudget, validateBudgetById } from '../middlewares/validateBudget';
 
 export const budgetRouter = express.Router();
 
 budgetRouter.post('/budgets', 
-                body('name')
-                    .notEmpty().withMessage('Name is required'),
-                body('amount')
-                    .notEmpty().withMessage('Amount is required')
-                    .isNumeric().withMessage('Amount must be a number')
-                    .custom((value) => value > 0).withMessage('Amount must be greater than 0'),
+                validateBudget,
                 handleInputErrors,
                 BudgetController.createbudget
                 );
@@ -20,27 +16,19 @@ budgetRouter.post('/budgets',
 budgetRouter.get('/budgets', BudgetController.getBudgets)
 
 budgetRouter.get('/budgets/:id',
-                param('id')
-                    .isInt().withMessage('Invalid ID')
-                    .custom((value) => value > 0).withMessage('ID must be greater than 0'),
+                validateBudgetById,
                 handleInputErrors,
-                BudgetController.getBudgetById)
+                BudgetController.getBudgetById
+            );
 
 budgetRouter.patch('/budgets/:id',
-                param('id')
-                    .isInt().withMessage('Invalid ID')
-                    .custom((value) => value > 0).withMessage('ID must be greater than 0'),
-                body('name')
-                    .notEmpty().withMessage('Name is required'),
-                body('amount')
-                    .notEmpty().withMessage('Amount is required')
-                    .isNumeric().withMessage('Amount must be a number')
-                    .custom((value) => value > 0).withMessage('Amount must be greater than 0'),
+                validateBudgetById,
+                validateBudget,
                 handleInputErrors,
-                BudgetController.updateBudget)
+                BudgetController.updateBudget
+            );
 
 budgetRouter.delete('/budgets/:id', 
-                param('id')
-                    .isInt().withMessage('Invalid ID')
-                    .custom((value) => value > 0).withMessage('ID must be greater than 0'),
-                BudgetController.deleteBudget)
+                validateBudgetById,
+                BudgetController.deleteBudget
+            );
