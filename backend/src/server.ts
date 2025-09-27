@@ -22,6 +22,6 @@ connectDB()
 app.use(morgan('dev'))
 app.use(express.json())
 
-app.use('/api', budgetRouter)
+app.use('/api/budgets', budgetRouter)
 
 export default app
