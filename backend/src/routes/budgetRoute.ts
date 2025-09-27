@@ -1,37 +1,36 @@
 import express from 'express';
-import { body, param } from 'express-validator';
 
-import { BudgetController } from '../controllers/BudgetsController';
+import { BudgetController } from '../controllers/BudgetsControllers';
 import { handleInputErrors } from '../middlewares/hadleInputErrors';
 import { validateBudget, validateBudgetById, validateBudgetExists } from '../middlewares/validateBudget';
+import { ExpenseController } from '../controllers/ExpenseController';
 
 export const budgetRouter = express.Router();
 
-budgetRouter.post('/budgets', 
+budgetRouter.param('budgetId', validateBudgetById)
+budgetRouter.param('budgetId', validateBudgetExists)
+
+budgetRouter.post('', 
                 validateBudget,
                 handleInputErrors,
                 BudgetController.createbudget
                 );
 
-budgetRouter.get('/budgets', BudgetController.getBudgets)
+budgetRouter.get('', BudgetController.getBudgets)
 
-budgetRouter.get('/budgets/:id',
-                validateBudgetById,
-                validateBudgetExists,
+budgetRouter.get('/:budgetId',
                 handleInputErrors,
                 BudgetController.getBudgetById
             );
 
-budgetRouter.patch('/budgets/:id',
-                validateBudgetById,
-                validateBudgetExists,
+budgetRouter.patch('/:budgetId',
                 validateBudget,
                 handleInputErrors,
                 BudgetController.updateBudget
             );
 
-budgetRouter.delete('/budgets/:id', 
-                validateBudgetById,
-                validateBudgetExists,
-                BudgetController.deleteBudget
-            );
+budgetRouter.delete('/:budgetId', BudgetController.deleteBudget);
+
+budgetRouter.post('/:budgetId/expenses', ExpenseController.createExpense)
+budgetRouter.get('/:budgetId/expenses/:expenseId', ExpenseController.getExpenseById)
+budgetRouter.patch('/:budgetId/expenses/:expenseId', ExpenseController.updateExpense)
