@@ -1,14 +1,19 @@
 import express from 'express';
 
 import { BudgetController } from '../controllers/BudgetsControllers';
+import { ExpenseController } from '../controllers/ExpenseController';
+
 import { handleInputErrors } from '../middlewares/hadleInputErrors';
 import { validateBudget, validateBudgetById, validateBudgetExists } from '../middlewares/validateBudget';
-import { ExpenseController } from '../controllers/ExpenseController';
+import { validateExpenseById, validateExpenseExists } from '../middlewares/validateExpense';
 
 export const budgetRouter = express.Router();
 
 budgetRouter.param('budgetId', validateBudgetById)
 budgetRouter.param('budgetId', validateBudgetExists)
+
+budgetRouter.param('expenseId', validateExpenseById)
+budgetRouter.param('expenseId', validateExpenseExists)
 
 budgetRouter.post('', 
                 validateBudget,
