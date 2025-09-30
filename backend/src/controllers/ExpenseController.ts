@@ -15,11 +15,11 @@ export class ExpenseController {
     }
 
     static getExpenseById = async (req: Request, res: Response) => {
-        
+        res.json(req.expense)
     }
     
     static updateExpense = async (req: Request, res: Response) =>{
-
+        
     }
 
     static deleteExpense = async (req: Request, res: Response) => {
