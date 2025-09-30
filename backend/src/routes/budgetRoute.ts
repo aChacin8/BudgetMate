@@ -5,7 +5,7 @@ import { ExpenseController } from '../controllers/ExpenseController';
 
 import { handleInputErrors } from '../middlewares/hadleInputErrors';
 import { validateBudget, validateBudgetById, validateBudgetExists } from '../middlewares/validateBudget';
-import { validateExpenseById, validateExpenseExists } from '../middlewares/validateExpense';
+import { validateExpense, validateExpenseById, validateExpenseExists } from '../middlewares/validateExpense';
 
 export const budgetRouter = express.Router();
 
@@ -36,6 +36,6 @@ budgetRouter.patch('/:budgetId',
 
 budgetRouter.delete('/:budgetId', BudgetController.deleteBudget);
 
-budgetRouter.post('/:budgetId/expenses', ExpenseController.createExpense)
+budgetRouter.post('/:budgetId/expenses', validateExpense, ExpenseController.createExpense)
 budgetRouter.get('/:budgetId/expenses/:expenseId', ExpenseController.getExpenseById)
-budgetRouter.patch('/:budgetId/expenses/:expenseId', ExpenseController.updateExpense)
+budgetRouter.patch('/:budgetId/expenses/:expenseId', validateExpense, ExpenseController.updateExpense)
