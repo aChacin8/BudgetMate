@@ -24,7 +24,7 @@ export const validateExpenseInput = async (req: Request, res: Response, next: Ne
         next();
 }
 
-export const validateExpenseById = async (req: Request, res: Response, next: NextFunction) => {
+export const validateBudgetExpenseById = async (req: Request, res: Response, next: NextFunction) => {
     await param('budgetExpenseId')
         .isInt().withMessage('Invalid ID')
         .custom((value) => value > 0).withMessage('ID must be greater than 0')
@@ -33,7 +33,7 @@ export const validateExpenseById = async (req: Request, res: Response, next: Nex
     next();
 }
 
-export const validateExpenseExists = async (req: Request, res: Response, next: NextFunction) => {
+export const validateBudgetExpenseExists = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { budgetExpenseId } = req.params
         const expense = await BudgetExpense.findByPk(budgetExpenseId)
