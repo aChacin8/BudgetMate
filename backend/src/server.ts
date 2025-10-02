@@ -2,6 +2,8 @@ import express from 'express'
 import morgan from 'morgan'
 import { db } from './config/db'
 import colors from 'colors'
+
+import './types/'
 import { budgetRouter } from './routes/budgetRoute'
 import expenseRouter from './routes/expensesRoute'
 
