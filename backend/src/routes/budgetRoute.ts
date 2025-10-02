@@ -1,19 +1,19 @@
 import express from 'express';
 
 import { BudgetController } from '../controllers/BudgetsControllers';
-import { ExpenseController } from '../controllers/ExpenseController';
+import { BudgetExpenseController } from '../controllers/BudgetExpenseController';
 
 import { handleInputErrors } from '../middlewares/hadleInputErrors';
 import { validateBudgetInput, validateBudgetById, validateBudgetExists } from '../middlewares/validateBudget';
-import { validateExpenseById, validateExpenseExists, validateExpenseInput } from '../middlewares/validateExpense';
+import { validateExpenseById, validateExpenseExists, validateExpenseInput } from '../middlewares/validateBudgetExpense';
 
 export const budgetRouter = express.Router();
 
 budgetRouter.param('budgetId', validateBudgetById)
 budgetRouter.param('budgetId', validateBudgetExists)
 
-budgetRouter.param('expenseId', validateExpenseById)
-budgetRouter.param('expenseId', validateExpenseExists)
+budgetRouter.param('budgetExpenseId', validateExpenseById)
+budgetRouter.param('budgetExpenseId', validateExpenseExists)
 
 budgetRouter.post('', 
                 validateBudgetInput,
@@ -33,18 +33,18 @@ budgetRouter.patch('/:budgetId',
 
 budgetRouter.delete('/:budgetId', handleInputErrors, BudgetController.deleteBudget);
 
-budgetRouter.post('/:budgetId/expenses', 
+budgetRouter.post('/:budgetId/budgetExpenses', 
             validateExpenseInput, 
             handleInputErrors, 
-            ExpenseController.createExpense
+            BudgetExpenseController.createExpense
         );
 
-budgetRouter.get('/:budgetId/expenses/:expenseId', handleInputErrors, ExpenseController.getExpenseById);
+budgetRouter.get('/:budgetId/budgetExpenses/:budgetExpenseId', handleInputErrors, BudgetExpenseController.getExpenseById);
 
-budgetRouter.patch('/:budgetId/expenses/:expenseId', 
+budgetRouter.patch('/:budgetId/budgetExpenses/:budgetExpenseId', 
             validateExpenseInput, 
             handleInputErrors, 
-            ExpenseController.updateExpense
+            BudgetExpenseController.updateExpense
         );
         
-budgetRouter.delete('/:budgetId/expenses/:expenseId',handleInputErrors,ExpenseController.deleteExpense)
+budgetRouter.delete('/:budgetId/budgetExpenses/:budgetExpenseId',handleInputErrors,BudgetExpenseController.deleteExpense)
