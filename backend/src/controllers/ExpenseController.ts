@@ -21,6 +21,7 @@ export class ExpenseController {
             if (!expenses){
             return res.status(404).json({message: 'Expenses not found'})
         }
+            res.json(expenses)
         } catch (error) {
             const err = new Error ('Failed to get expenses')
             res.status(500).json({message: err.message})
