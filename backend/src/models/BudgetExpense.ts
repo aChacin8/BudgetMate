@@ -2,10 +2,10 @@ import { Table, Column, Model, DataType, ForeignKey, BelongsTo  } from "sequeliz
 import Budget from "./Budget";
 
 @Table ({
-    tableName: 'expenses'
+    tableName: 'budgetExpenses'
 })
 
-class Expense extends Model {
+class BudgetExpense extends Model {
     @Column({
         type: DataType.STRING(100)
     })
@@ -15,7 +15,7 @@ class Expense extends Model {
         type: DataType.DECIMAL
     })
     declare amount: number
-
+    
     @ForeignKey(()=> Budget)
     declare budgetId: number
 
@@ -23,4 +23,4 @@ class Expense extends Model {
     declare budget: Budget
 }
 
-export default Expense
+export default BudgetExpense
