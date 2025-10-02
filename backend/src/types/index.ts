@@ -1,6 +1,6 @@
-import Expense from "../models/Expense";
-import BudgetExpense from "../models/BudgetExpense";
-import Budget from "../models/Budget";
+import Expense from "../models/earning/EarningExpense";
+import BudgetExpense from "../models/budget/BudgetExpense";
+import Budget from "../models/budget/Budget";
 
 declare global {
     namespace Express {

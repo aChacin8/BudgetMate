@@ -1,12 +1,11 @@
 import express from 'express';
 
-import { BudgetController } from '../controllers/BudgetsControllers';
-import { BudgetExpenseController } from '../controllers/BudgetExpenseController';
+import { BudgetController } from '../controllers/budget/BudgetsControllers';
+import { BudgetExpenseController } from '../controllers/budget/BudgetExpenseController';
 
 import { handleInputErrors } from '../middlewares/hadleInputErrors';
-import { validateBudgetInput, validateBudgetById, validateBudgetExists } from '../middlewares/validateBudget';
-import { validateBudgetExpenseById, validateBudgetExpenseExists, validateExpenseInput } from '../middlewares/validateBudgetExpense';
-import BudgetExpense from '../models/BudgetExpense';
+import { validateBudgetInput, validateBudgetById, validateBudgetExists } from '../middlewares/budget/validateBudget';
+import { validateBudgetExpenseById, validateBudgetExpenseExists, validateExpenseInput } from '../middlewares/budget/validateBudgetExpense';
 
 export const budgetRouter = express.Router();
 

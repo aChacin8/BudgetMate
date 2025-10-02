@@ -1,5 +1,5 @@
 import type { Request, Response } from "express"
-import BudgetExpense from "../models/BudgetExpense"
+import BudgetExpense from "../../models/budget/BudgetExpense"
 
 export class BudgetExpenseController {
     static createBudgetExpense = async (req: Request, res: Response) => {

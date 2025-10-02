@@ -1,10 +1,10 @@
 import { Table, Model,Column, DataType } from "sequelize-typescript";
 
 @Table({
-    tableName: 'expenses',
+    tableName: 'earning_expenses',
 })
 
-class Expense extends Model {
+class EarningExpense extends Model {
     @Column({
         type: DataType.STRING(100)
     })
@@ -16,4 +16,4 @@ class Expense extends Model {
     declare amount: number
 }
 
-export default Expense;
+export default EarningExpense;

@@ -1,6 +1,6 @@
 import { Request, Response} from 'express'
-import Budget from '../models/Budget'
-import BudgetExpense from '../models/BudgetExpense'
+import Budget from '../../models/budget/Budget'
+import BudgetExpense from "../../models/budget/BudgetExpense";
 
 export class BudgetController {
     static createbudget = async (req: Request, res: Response)=> {

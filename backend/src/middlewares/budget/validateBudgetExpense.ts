@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { param, body } from "express-validator";
 
-import BudgetExpense from "../models/BudgetExpense";
+import BudgetExpense from "../../models/budget/BudgetExpense";
 
 declare global {
     namespace Express {

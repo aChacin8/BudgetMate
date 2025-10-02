@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
-import Expense from "../models/Expense";
+import EarningExpense from "../../models/earning/EarningExpense";
 
 export class ExpenseController {
     static createExpense = async (req: Request, res: Response) => {
         try {
-            const expense = await Expense.create(req.body)
+            const expense = await EarningExpense.create(req.body)
             expense.save()
             res.status(201).json('Expense created successfully')
         } catch (error) {
@@ -15,7 +15,7 @@ export class ExpenseController {
 
     static getExpenses = async (req: Request, res: Response) => {
         try {
-            const expenses = await Expense.findAll({
+            const expenses = await EarningExpense.findAll({
                 order: [['amount', 'DESC']],
             })
             if (!expenses){

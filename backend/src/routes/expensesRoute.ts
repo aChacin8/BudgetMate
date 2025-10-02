@@ -1,8 +1,8 @@
 import express  from "express";
-import { ExpenseController } from "../controllers/ExpenseController";
-import { validateExpenseInput } from "../middlewares/validateBudgetExpense";
+import { ExpenseController } from "../controllers/earning/ExpenseController";
+import { validateExpenseInput } from "../middlewares/budget/validateBudgetExpense";
 import { handleInputErrors } from "../middlewares/hadleInputErrors";
-import { validateExpenseById, validateExpenseExists } from "../middlewares/validateExpense";
+import { validateExpenseById, validateExpenseExists } from "../middlewares/earnings/validateExpense";
 
 const expenseRouter = express.Router();
 

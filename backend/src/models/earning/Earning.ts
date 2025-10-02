@@ -4,7 +4,7 @@ import { Table, Model, Column, DataType } from "sequelize-typescript";
     tableName: 'earnings'
 })
 
-class Earnings extends Model {
+class Earning extends Model {
     @Column({
         type: DataType.DECIMAL(10,2)
     })
@@ -21,4 +21,4 @@ class Earnings extends Model {
     declare yearAmount: number
 }
 
-export default Earnings;
+export default Earning;
