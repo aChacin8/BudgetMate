@@ -2,7 +2,7 @@ import type { Request, Response } from "express"
 import BudgetExpense from "../models/BudgetExpense"
 
 export class BudgetExpenseController {
-    static createExpense = async (req: Request, res: Response) => {
+    static createBudgetExpense = async (req: Request, res: Response) => {
         try {
             const expense = await BudgetExpense.create(req.body)
             expense.budgetId = req.budget.id
@@ -14,16 +14,16 @@ export class BudgetExpenseController {
         }
     }
 
-    static getExpenseById = async (req: Request, res: Response) => {    
+    static getBudgetExpenseById = async (req: Request, res: Response) => {    
         res.json(req.budgetExpense)
     }
     
-    static updateExpense = async (req: Request, res: Response) =>{
+    static updateBudgetExpense = async (req: Request, res: Response) =>{
         await req.budgetExpense.update(req.body)
         res.json('Expense updated sucessfully')
     }
 
-    static deleteExpense = async (req: Request, res: Response) => {
+    static deleteBudgetExpense = async (req: Request, res: Response) => {
         await req.budgetExpense.destroy()
     }
 }
