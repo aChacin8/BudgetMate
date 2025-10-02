@@ -20,7 +20,6 @@ export const validateBudgetInput = async (req: Request, res: Response, next: Nex
         .isNumeric().withMessage('Amount must be a number')
         .custom((value) => value > 0).withMessage('Amount must be greater than 0')
         .run(req)
-
     next();
 }
 
@@ -47,4 +46,5 @@ export const validateBudgetExists = async (req: Request, res: Response, next: Ne
         res.status(500).json({ message: err.message })
     }
 
+    next();
 }
