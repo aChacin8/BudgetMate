@@ -1,10 +1,10 @@
 import type { Request, Response } from "express"
-import Expense from "../models/Expense"
+import BudgetExpense from "../models/BudgetExpense"
 
-export class ExpenseController {
+export class BudgetExpenseController {
     static createExpense = async (req: Request, res: Response) => {
         try {
-            const expense = await Expense.create(req.body)
+            const expense = await BudgetExpense.create(req.body)
             expense.budgetId = req.budget.id
             expense.save()
             res.status(201).json('Expense created successfully')
@@ -14,16 +14,16 @@ export class ExpenseController {
         }
     }
 
-    static getExpenseById = async (req: Request, res: Response) => {
-        res.json(req.expense)
+    static getExpenseById = async (req: Request, res: Response) => {    
+        res.json(req.budgetExpense)
     }
     
     static updateExpense = async (req: Request, res: Response) =>{
-        await req.expense.update(req.body)
+        await req.budgetExpense.update(req.body)
         res.json('Expense updated sucessfully')
     }
 
     static deleteExpense = async (req: Request, res: Response) => {
-        await req.expense.destroy()
+        await req.budgetExpense.destroy()
     }
 }
