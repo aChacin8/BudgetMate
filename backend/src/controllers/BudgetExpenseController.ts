@@ -9,16 +9,17 @@ export class BudgetExpenseController {
             expense.save()
             res.status(201).json('Expense created successfully')
         } catch (error) {
-            const err = new Error ('Failed to create expense')
-            res.status(500).json({message: err.message})
+            const err = new Error('Failed to create expense')
+            res.status(500).json({ message: err.message })
         }
     }
 
-    static getBudgetExpenseById = async (req: Request, res: Response) => {    
-        res.json(req.budgetExpense)
-    }
-    
-    static updateBudgetExpense = async (req: Request, res: Response) =>{
+    static getBudgetExpenseById = async (req: Request, res: Response) => {
+        res.json(req.budgetExpense);
+    };
+
+
+    static updateBudgetExpense = async (req: Request, res: Response) => {
         await req.budgetExpense.update(req.body)
         res.json('Expense updated sucessfully')
     }
