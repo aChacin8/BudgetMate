@@ -1,5 +1,5 @@
 import {Table, Model, DataType,  Column, HasMany } from "sequelize-typescript";
-import Expense from "./Expense";
+import BudgetExpense from "./BudgetExpense";
 
 @Table({
     tableName: 'budgets',
@@ -16,11 +16,17 @@ class Budget extends Model {
     })
     declare amount: number
 
-    @HasMany(()=> Expense, {
+    @Column({
+        type: DataType.BOOLEAN,
+        defaultValue: false
+    })
+    declare isActive: boolean
+
+    @HasMany(()=> BudgetExpense, {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
     })
-    declare expenses: Expense[]
+    declare budgetExpenses: BudgetExpense[]
 }
 
 export default Budget;
