@@ -1,12 +1,12 @@
 import { Request, Response, NextFunction } from "express";
 import { param, body } from "express-validator";
 
-import Expense from "../models/BudgetExpense";
+import BudgetExpense from "../models/BudgetExpense";
 
 declare global {
     namespace Express {
         interface Request {
-            expense?: Expense
+            budgetExpense?: BudgetExpense
         }
     }
 }
@@ -20,10 +20,12 @@ export const validateExpenseInput = async (req: Request, res: Response, next: Ne
         .isNumeric().withMessage('Amount must be a number')
         .custom((value) => value > 0).withMessage('Amount must be greater than 0')
         .run(req)
+    
+        next();
 }
 
 export const validateExpenseById = async (req: Request, res: Response, next: NextFunction) => {
-    await param('expenseId')
+    await param('budgetExpenseId')
         .isInt().withMessage('Invalid ID')
         .custom((value) => value > 0).withMessage('ID must be greater than 0')
         .run(req)
@@ -33,16 +35,17 @@ export const validateExpenseById = async (req: Request, res: Response, next: Nex
 
 export const validateExpenseExists = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const { expenseId } = req.params
-        const expense = await Expense.findByPk(expenseId)
+        const { budgetExpenseId } = req.params
+        const expense = await BudgetExpense.findByPk(budgetExpenseId)
         if (!expense) {
             return res.status(404).json({ message: 'Expense not found' })
         }
-        req.expense = expense   
+        req.budgetExpense = expense   
         next()
     } catch (error) {
         const err = new Error('Failed to get expense by id')
         res.status(500).json({ message: err.message })
     }
 
+    next();
 }
