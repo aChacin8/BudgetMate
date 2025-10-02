@@ -11,7 +11,7 @@ declare global {
     }
 }
 
-export const validateBudget = async (req: Request, res: Response, next: NextFunction) => {
+export const validateBudgetInput = async (req: Request, res: Response, next: NextFunction) => {
     await body('name')
         .notEmpty().withMessage('Name is required')
         .run(req);
