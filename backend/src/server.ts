@@ -3,6 +3,7 @@ import morgan from 'morgan'
 import { db } from './config/db'
 import colors from 'colors'
 import { budgetRouter } from './routes/budgetRoute'
+import expenseRouter from './routes/expensesRoute'
 
 const connectDB = async () => {
     try {
@@ -23,5 +24,6 @@ app.use(morgan('dev'))
 app.use(express.json())
 
 app.use('/api/budgets', budgetRouter)
+app.use('/api/expenses', expenseRouter)
 
 export default app
