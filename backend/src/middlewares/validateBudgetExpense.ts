@@ -20,8 +20,8 @@ export const validateExpenseInput = async (req: Request, res: Response, next: Ne
         .isNumeric().withMessage('Amount must be a number')
         .custom((value) => value > 0).withMessage('Amount must be greater than 0')
         .run(req)
-    
-        next();
+
+    next();
 }
 
 export const validateBudgetExpenseById = async (req: Request, res: Response, next: NextFunction) => {
@@ -33,19 +33,27 @@ export const validateBudgetExpenseById = async (req: Request, res: Response, nex
     next();
 }
 
-export const validateBudgetExpenseExists = async (req: Request, res: Response, next: NextFunction) => {
+export const validateBudgetExpenseExists = async (req: Request,res: Response,next: NextFunction) => {
     try {
-        const { budgetExpenseId } = req.params
-        const expense = await BudgetExpense.findByPk(budgetExpenseId)
-        if (!expense) {
-            return res.status(404).json({ message: 'Expense not found' })
-        }
-        req.budgetExpense = expense   
-        next()
-    } catch (error) {
-        const err = new Error('Failed to get expense by id')
-        res.status(500).json({ message: err.message })
-    }
+        const { budgetExpenseId, budgetId } = req.params;
 
-    next();
-}
+        const budgetExpense = await BudgetExpense.findOne({
+            where: {
+                id: budgetExpenseId,
+                budgetId: budgetId
+            }
+        });
+
+        if (!budgetExpense) {
+            return res.status(404).json({ message: 'Expense not found for this budget' });
+        }
+
+        req.budgetExpense = budgetExpense;
+        next();
+    } catch (error) {
+        const err = new Error('Failed to get expense by id');
+        res.status(500).json({ message: err.message });
+    }
+};
+
+
