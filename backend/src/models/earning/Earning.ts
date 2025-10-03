@@ -1,4 +1,6 @@
-import { Table, Model, Column, DataType } from "sequelize-typescript";
+import { Table, Model, Column, DataType, HasMany } from "sequelize-typescript";
+import EarningExpense from "./EarningExpense";
+import Budget from "../budget/Budget";
 
 @Table({
     tableName: 'earnings'
@@ -19,6 +21,18 @@ class Earning extends Model {
         type: DataType.INTEGER
     })
     declare yearAmount: number
+
+    @HasMany(()=> EarningExpense, {
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+    })
+    declare earningExpenses: EarningExpense[]
+
+    @HasMany(()=> Budget, {
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+    })
+    declare budgets: Budget[]
 }
 
 export default Earning;
