@@ -1,4 +1,5 @@
-import { Table, Model,Column, DataType } from "sequelize-typescript";
+import { Table, Model,Column, DataType, ForeignKey, BelongsTo} from "sequelize-typescript";
+import Earning from "./Earning";
 
 @Table({
     tableName: 'earning_expenses',
@@ -14,6 +15,13 @@ class EarningExpense extends Model {
         type: DataType.DECIMAL(10,2)
     })
     declare amount: number
+
+    @ForeignKey(() => Earning)
+    declare earningId: number
+
+    @BelongsTo(()=> Earning)
+    declare earning:Earning
 }
+
 
 export default EarningExpense;

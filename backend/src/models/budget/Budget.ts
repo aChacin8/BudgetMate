@@ -1,5 +1,6 @@
-import {Table, Model, DataType,  Column, HasMany } from "sequelize-typescript";
+import {Table, Model, DataType,  Column, HasMany, ForeignKey, BelongsTo } from "sequelize-typescript";
 import BudgetExpense from "./BudgetExpense";
+import Earning from "../earning/Earning";
 
 @Table({
     tableName: 'budgets',
@@ -27,6 +28,12 @@ class Budget extends Model {
         onDelete: 'CASCADE'
     })
     declare budgetExpenses: BudgetExpense[]
+
+    @ForeignKey(() => Earning)
+    declare earningId: number
+
+    @BelongsTo(()=> Earning)
+    declare earning:Earning
 }
 
 export default Budget;
