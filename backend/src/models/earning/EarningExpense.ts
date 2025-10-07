@@ -2,7 +2,8 @@ import { Table, Model,Column, DataType, ForeignKey, BelongsTo} from "sequelize-t
 import Earning from "./Earning";
 
 @Table({
-    tableName: 'earning_expenses',
+    tableName: 'earningExpenses',
+    underscored: true
 })
 
 class EarningExpense extends Model {
