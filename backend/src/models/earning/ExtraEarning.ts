@@ -3,13 +3,14 @@ import Earning from "./Earning";
 
 @Table({
     tableName: 'extraEarnings',
+    underscored: true
 })
 
 class ExtraEarnings extends Model {
     @Column({
         type: DataType.STRING(100)
     })
-    declare name:string
+    declare source:string
 
     @Column({
         type:DataType.DECIMAL(10,2)
@@ -22,3 +23,5 @@ class ExtraEarnings extends Model {
     @BelongsTo(()=> Earning)
     declare earning:Earning
 }
+
+export default ExtraEarnings;
