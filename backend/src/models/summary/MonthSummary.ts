@@ -2,7 +2,7 @@ import { Table, Model, Column, DataType, ForeignKey, BelongsTo } from "sequelize
 import Earning from "../earning/Earning";
 
 @Table({
-    tableName: 'monthSumaries',
+    tableName: 'month_sumaries',
     underscored:true
 })
 

@@ -2,7 +2,7 @@ import { Table, Column, Model, DataType, ForeignKey, BelongsTo  } from "sequeliz
 import Budget from "./Budget";
 
 @Table ({
-    tableName: 'budgetExpenses',
+    tableName: 'budget_expenses',
     underscored: true
 })
 
