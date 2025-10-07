@@ -25,6 +25,11 @@ class Budget extends Model {
     declare isActive: boolean
 
     @Column({
+        type: DataType.ENUM('Monthly', 'Future')
+    })
+    declare budgetType: 'Monthly' | 'Future'
+
+    @Column({
         type: DataType.TEXT
     })
     declare description: string //"Importante" solo para usuarios premium (en un futuro)
