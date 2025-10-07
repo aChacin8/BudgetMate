@@ -4,6 +4,7 @@ import Earning from "../earning/Earning";
 
 @Table({
     tableName: 'budgets',
+    underscored: true
 })
 
 class Budget extends Model {
@@ -22,6 +23,11 @@ class Budget extends Model {
         defaultValue: false
     })
     declare isActive: boolean
+
+    @Column({
+        type: DataType.TEXT
+    })
+    declare description: string //"Importante" solo para usuarios premium (en un futuro)
 
     @HasMany(()=> BudgetExpense, {
         onUpdate: 'CASCADE',
