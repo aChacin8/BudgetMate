@@ -10,7 +10,7 @@ class ExtraEarnings extends Model {
     @Column({
         type: DataType.STRING(100)
     })
-    declare source:string
+    declare source:string //De donde proviene el ingreso extra
 
     @Column({
         type:DataType.DECIMAL(10,2)
