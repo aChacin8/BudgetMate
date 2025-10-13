@@ -33,6 +33,11 @@ class User extends Model {
     declare password: string
 
     @Column({
+        type: DataType.INTEGER
+    })
+    declare phone : number
+    
+    @Column({
         type: DataType.BOOLEAN,
         defaultValue: false
     })
