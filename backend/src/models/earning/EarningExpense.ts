@@ -10,12 +10,12 @@ class EarningExpense extends Model {
     @Column({
         type: DataType.STRING(100)
     })
-    declare name:string
+    declare expenseName:string
 
     @Column({
         type: DataType.DECIMAL(10,2)
     })
-    declare amount: number
+    declare expenseAmount: number
 
     @ForeignKey(() => Earning)
     declare earningId: number

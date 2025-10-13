@@ -11,12 +11,12 @@ class Budget extends Model {
     @Column({
         type: DataType.STRING(100),
         })
-    declare name: string
+    declare budgetName: string
 
     @Column({
         type: DataType.DECIMAL(10,2)
     })
-    declare amount: number
+    declare budgetAmount: number
 
     @Column({
         type: DataType.BOOLEAN,
