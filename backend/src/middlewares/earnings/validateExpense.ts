@@ -3,14 +3,6 @@ import { param, body } from "express-validator";
 
 import Expense from "../../models/earning/EarningExpense";
 
-declare global {
-    namespace Express {
-        interface Request {
-            expense?: Expense
-        }
-    }
-}
-
 export const validateExpenseById = async (req: Request, res: Response, next: NextFunction) => {
     await param('expenseId')
         .isInt().withMessage('Invalid ID')
