@@ -3,14 +3,6 @@ import { param, body } from "express-validator";
 
 import Budget from "../../models/budget/Budget";
 
-declare global {
-    namespace Express {
-        interface Request {
-            budget?: Budget
-        }
-    }
-}
-
 export const validateBudgetInput = async (req: Request, res: Response, next: NextFunction) => {
     await body('name')
         .notEmpty().withMessage('Name is required')
