@@ -1,12 +1,13 @@
 import express from 'express'
 import morgan from 'morgan'
-import { db } from './config/db'
 import colors from 'colors'
 
 import './types/'
+import { db } from './config/db'
+import { CryptoEmail } from './utils/cryptoEmail'
 import { budgetRouter } from './routes/budgetRoute'
 import expenseRouter from './routes/expensesRoute'
-import { CryptoEmail } from './utils/cryptoEmail'
+import { authRouter } from './routes/authRoute'
 
 const connectDB = async () => {
     try {
@@ -40,5 +41,6 @@ app.use(express.json())
 
 app.use('/api/budgets', budgetRouter)
 app.use('/api/expenses', expenseRouter)
+app.use('/api/auth', authRouter)
 
 export default app
