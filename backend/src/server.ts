@@ -6,6 +6,7 @@ import colors from 'colors'
 import './types/'
 import { budgetRouter } from './routes/budgetRoute'
 import expenseRouter from './routes/expensesRoute'
+import { CryptoEmail } from './utils/cryptoEmail'
 
 const connectDB = async () => {
     try {
@@ -19,7 +20,19 @@ const connectDB = async () => {
     }
 }
 
-const app = express()
+const app = express();
+
+(
+    async () => {
+        try {
+            await CryptoEmail.init();
+            console.log(colors.bgGreen('Crypto system initialized'));
+        } catch (error) {
+            console.error(colors.bgRed('Failed to initialize crypto system'));
+            console.error(error);
+        }
+    }
+)();
 
 connectDB()
 app.use(morgan('dev'))
