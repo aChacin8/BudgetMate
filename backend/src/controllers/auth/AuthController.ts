@@ -1,24 +1,28 @@
-import { Request, Response } from "express";
-import bcrypt from "bcrypt";
+import { Request, Response } from "express";    
 
 import User from "../../models/user/User";
+import { hashPassword } from "../../utils/hash";
+import { CryptoEmail } from "../../utils/cryptoEmail";
 
 export class AuthController {
     static createUser = async (req: Request, res: Response) =>{
-        const { email } = req.body;
+        const { email, password, ...rest } = req.body;
+        
         const userExists = await User.findOne({where: { email}});
         if(userExists){
             return res.status(409).json({ message: 'User already exists'});
         }
         
         try { 
-            const { password, ...rest } = req.body;
-            const user = await User.create(
-                {
-                    ...rest,
-                    password: await bcrypt.hash(password,10)
-                }
-            );
+            const { encrypted, nonce } = CryptoEmail.encryptEmail(email);
+            
+            const user = await User.create({
+                ...rest,
+                email__encrypted: encrypted,
+                nonce: nonce,
+                password: await hashPassword(password)
+            })
+
             await user.save();
             res.status(201).json(user);
         } catch (error) {
