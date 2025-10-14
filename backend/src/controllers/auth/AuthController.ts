@@ -30,4 +30,13 @@ export class AuthController {
             res.status(500).json({ message: 'Internal server error' });
         }
     }
+
+    static loginUser = async (req: Request, res: Response) => {
+        const user = await User.findOne({where: { email: req.body.email }});
+
+        if(!user){
+            return res.status(404).json({ message: 'User not found'});
+        }
+        res.json(user);
+    }
 }
