@@ -2,7 +2,7 @@ import express from 'express'
 import morgan from 'morgan'
 import colors from 'colors'
 
-import './types/'
+import './interface'
 import { db } from './config/db'
 import { CryptoEmail } from './utils/cryptoEmail'
 import { budgetRouter } from './routes/budgetRoute'
