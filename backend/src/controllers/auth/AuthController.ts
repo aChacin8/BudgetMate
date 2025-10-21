@@ -3,10 +3,11 @@ import { Request, Response } from "express";
 import User from "../../models/user/User";
 import { hashPassword } from "../../utils/hash";
 import { CryptoEmail } from "../../utils/cryptoEmail";
+import { generateToken } from "../../utils/token";
 
 export class AuthController {
     static createUser = async (req: Request, res: Response) =>{
-        const { email, password, ...rest } = req.body;
+        const { email, password, token, ...rest } = req.body;
         
         const userExists = await User.findOne({where: { email}});
         if(userExists){
@@ -18,9 +19,10 @@ export class AuthController {
             
             const user = await User.create({
                 ...rest,
-                email__encrypted: encrypted,
+                email: encrypted,
                 nonce: nonce,
-                password: await hashPassword(password)
+                password: await hashPassword(password),
+                token: generateToken()
             })
 
             await user.save();
