@@ -23,6 +23,11 @@ export const validateUserInput = async (req: Request, res: Response, next: NextF
         .matches(/[A-Z]/).withMessage('Password must contain at least one highercase letter')
         .matches(/[@$!%*?&]/).withMessage('Password must contain at least one special character')
         .run(req);
+    await body('phone')
+        .optional()
+        .isLength({ min: 7, max: 15 }).withMessage('Phone number must be between 7 and 15 digits')
+        .isNumeric().withMessage('Phone number must contain only numbers')
+        .run(req);
     next();
 }
 
