@@ -13,7 +13,7 @@
         "declaration": true,
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
-        "typeRoots": ["./node_modules/@types", "./src/types"]
+        "typeRoots": ["./node_modules/@types", "src/interface"]
     },
     "include": ["src/**/*.ts"],
 }
