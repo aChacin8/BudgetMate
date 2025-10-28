@@ -6,3 +6,10 @@ export interface TransportConfig {
         pass: string
     }
 }
+
+export interface IEmail {
+    firstName: string
+    lastName: string
+    email: string
+    token: string
+}
