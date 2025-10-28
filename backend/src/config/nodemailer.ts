@@ -1,7 +1,7 @@
 import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
 
-import { TransportConfig } from '../interface/transport';
+import { TransportConfig } from '../interface/email';
 
 dotenv.config();
 
