@@ -30,6 +30,12 @@ class User extends Model {
         type: DataType.STRING,
         allowNull: false
     })
+    declare nonce: string
+
+    @Column({
+        type: DataType.STRING,
+        allowNull: false
+    })
     declare password: string
 
     @Column({
