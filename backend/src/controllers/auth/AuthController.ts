@@ -4,6 +4,7 @@ import User from "../../models/user/User";
 import { hashPassword } from "../../utils/hash";
 import { CryptoEmail } from "../../utils/cryptoEmail";
 import { generateToken } from "../../utils/token";
+import { AuthEmail } from "../../emails/AuthEmail";
 
 export class AuthController {
     static createUser = async (req: Request, res: Response) =>{
@@ -26,6 +27,14 @@ export class AuthController {
             })
 
             await user.save();
+            
+            await AuthEmail.sendConfirmEmail({
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                token: user.token
+            })
+            
             res.status(201).json(user);
         } catch (error) {
             console.error(error);
