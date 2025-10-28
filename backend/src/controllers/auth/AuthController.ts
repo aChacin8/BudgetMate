@@ -32,6 +32,7 @@ export class AuthController {
                 firstName: user.firstName,
                 lastName: user.lastName,
                 email: user.email,
+                nonce: user.nonce,
                 token: user.token
             })
             

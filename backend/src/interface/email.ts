@@ -11,5 +11,6 @@ export interface IEmail {
     firstName: string
     lastName: string
     email: string
+    nonce: string
     token: string
 }
