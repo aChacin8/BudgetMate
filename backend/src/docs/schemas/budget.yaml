@@ -1,0 +1,26 @@
+Budeget: 
+  type: object
+  properties: 
+    id:
+      type: number
+      example: 1  
+    name:  
+      type: string 
+      example: "Travel to Japan" 
+    amount:  
+      type: number 
+      example: 30000.00 
+    isActive:  
+      type: boolean 
+      example: true 
+    budgetType:  
+      type: string 
+      example: "Future" 
+    description:  
+      type: string 
+      example: "Saving for a trip to Japan next year." 
+    earningId:  
+      type: string 
+      example: "1"
+                    
+                

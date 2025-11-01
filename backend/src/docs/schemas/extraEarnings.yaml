@@ -1,0 +1,17 @@
+ExtraEarnings: 
+  type: object
+  properties: 
+      id:
+        type: number
+        example: 1 
+      source:  
+        type: string 
+        example: "Freelance Project" 
+      amount:  
+        type: number 
+        example: 5000.00 
+      earningId:  
+        type: number
+        example: 1
+                    
+                

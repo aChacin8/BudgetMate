@@ -1,0 +1,17 @@
+EarningExpense: 
+  type: object
+  propierties: 
+      id:
+        type: number
+        example: 1
+      name:  
+        type: string 
+        example: "Shopping" 
+      amount:  
+        type: number 
+        example: 2000.00 
+      earningId:  
+        type: number 
+        example: 1
+                    
+                

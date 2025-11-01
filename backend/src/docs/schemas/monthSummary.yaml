@@ -1,0 +1,23 @@
+MonthSummary: 
+  type: object
+  properties: 
+    id:  
+      type: number 
+      example: 1 
+    month:  
+      type: date 
+      example: "2023-01-01" 
+    totalEarnings:  
+      type: number 
+      example: 155000.00 
+    totalExpenses:  
+      type: number 
+      example: 50000.00 
+    remaining:  
+      type: number 
+      example: 105000.00 
+    earningId:  
+      type: number 
+      example: 1
+                  
+              

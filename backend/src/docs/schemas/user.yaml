@@ -1,0 +1,30 @@
+User:
+  type: object
+  properties:
+    id:
+      type: number
+      example: 1
+    firstName:
+      type: string
+      example: "Alejandro"
+    lastName:
+      type: string
+      example: "Chacín"
+    email:
+      type: string
+      example: "encrypted@email.com"
+    nonce:
+      type: string
+      example: "randomNonceValue"
+    password:
+      type: string
+      example: "hashedPasswordValue"
+    phone:
+      type: string
+      example: "5512345678"
+    token:
+      type: string
+      example: "123456"
+    isPremium:
+      type: boolean
+      example: false

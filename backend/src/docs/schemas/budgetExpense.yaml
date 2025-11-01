@@ -1,0 +1,17 @@
+BudgetExpense: 
+  type: object
+  properties: 
+    id:  
+      type: number 
+      example: 1 
+    name:  
+      type: string 
+      example: "Flight Tickets" 
+    amount:  
+      type: number 
+      example: 15000.00 
+    budgetId:  
+      type: number 
+      example: 1
+                    
+                
