@@ -1,0 +1,64 @@
+paths:
+  /auth/register:
+    post:
+      summary: Register a new user
+      description: >
+        Registers a new user in the system.  
+        The email is encrypted before storage, the password is hashed,  
+        and a verification email is sent with a one-time confirmation token.
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - firstName
+                - lastName
+                - email
+                - password
+              properties:
+                firstName:
+                  type: string
+                  example: "Alejandro"
+                lastName:
+                  type: string
+                  example: "Chacín"
+                email:
+                  type: string
+                  example: "alejandro@example.com"
+                password:
+                  type: string
+                  example: "StrongPass123!"
+                phone:
+                  type: string
+                  example: "5512345678"
+      responses:
+        201:
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        409:
+          description: User already exists
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "User already exists"
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Internal server error"
