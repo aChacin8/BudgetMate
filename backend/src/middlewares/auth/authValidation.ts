@@ -1,7 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
+import { body } from 'express-validator';
 
 import User from '../../models/user/User';
+import { isLength } from 'validator';
 
 export const authValidation = async (req: Request, res: Response, next: NextFunction) => {
     const bearer = req.headers.authorization;
@@ -22,6 +24,14 @@ export const authValidation = async (req: Request, res: Response, next: NextFunc
     } catch (error) {
         
     }
+}
 
+export const confirmAccountValidation = async (req: Request, res: Response, next: NextFunction) => {
+    await body('token')
+        .notEmpty().withMessage('Token is required')
+        .isInt().withMessage('Token must be numeric')
+        .isLength({ min: 6, max: 6 }).withMessage('Token must be 6 characters long')
+        .run(req)
 
+    next();
 }
