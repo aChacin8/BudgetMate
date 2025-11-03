@@ -53,6 +53,12 @@ class User extends Model {
         type: DataType.BOOLEAN,
         defaultValue: false
     })
+    declare isConfirmed: boolean
+
+    @Column({
+        type: DataType.BOOLEAN,
+        defaultValue: false
+    })
     declare isPremium: boolean
 
     @HasMany(() => Earning, {
