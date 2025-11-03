@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { param, body } from "express-validator";
+import { param } from "express-validator";
 
 import Expense from "../../models/earning/EarningExpense";
 
