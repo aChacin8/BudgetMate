@@ -1,4 +1,4 @@
-import { Request, Response } from "express";    
+import { Request, Response } from "express";
 
 import User from "../../models/user/User";
 import { hashPassword } from "../../utils/hash";
@@ -7,17 +7,17 @@ import { generateToken } from "../../utils/token";
 import { AuthEmail } from "../../emails/AuthEmail";
 
 export class AuthController {
-    static createUser = async (req: Request, res: Response) =>{
+    static createUser = async (req: Request, res: Response) => {
         const { email, password, token, ...rest } = req.body;
-        
-        const userExists = await User.findOne({where: { email}});
-        if(userExists){
-            return res.status(409).json({ message: 'User already exists'});
+
+        const userExists = await User.findOne({ where: { email } });
+        if (userExists) {
+            return res.status(409).json({ message: 'User already exists' });
         }
-        
-        try { 
+
+        try {
             const { encrypted, nonce } = CryptoEmail.encryptEmail(email);
-            
+
             const user = await User.create({
                 ...rest,
                 email: encrypted,
@@ -27,7 +27,7 @@ export class AuthController {
             })
 
             await user.save();
-            
+
             await AuthEmail.sendConfirmEmail({
                 firstName: user.firstName,
                 lastName: user.lastName,
@@ -35,7 +35,7 @@ export class AuthController {
                 nonce: user.nonce,
                 token: user.token
             })
-            
+
             res.status(201).json(user);
         } catch (error) {
             console.error(error);
@@ -43,11 +43,31 @@ export class AuthController {
         }
     }
 
-    static loginUser = async (req: Request, res: Response) => {
-        const user = await User.findOne({where: { email: req.body.email }});
+    static confirmAccount = async (req: Request, res: Response) => {
+        const { token } = req.body;
+        console.log(token);
+        
+        try {
+            const user = await User.findOne({ where: { token } });
+            if (!user){
+                return res.status(404).json({ message: 'Invalid token code' });
+            }
+            user.isConfirmed = true;
+            user.token = null;
+            await user.save();
 
-        if(!user){
-            return res.status(404).json({ message: 'User not found'});
+            return res.status(200).json({ message: 'Account confirmed successfully' });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ message: 'Internal server error' });
+        }
+    }
+
+    static loginUser = async (req: Request, res: Response) => {
+        const user = await User.findOne({ where: { email: req.body.email } });
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
         }
         res.json(user);
     }
