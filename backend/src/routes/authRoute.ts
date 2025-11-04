@@ -4,6 +4,7 @@ import { AuthController } from '../controllers/auth/AuthController';
 import { handleInputErrors } from '../middlewares/hadleInputErrors';
 import { validateUserById, validateUserExists, validateUserInput } from '../middlewares/validateUsers';
 import { confirmAccountValidation } from '../middlewares/auth/authValidation';
+import { tokenLimiter } from '../config/limiter';
 
 export const authRouter = express.Router();
 
@@ -17,6 +18,7 @@ authRouter.post('',
 )
 
 authRouter.post('/confirm-account', 
+    tokenLimiter,
     confirmAccountValidation,
     handleInputErrors,
     AuthController.confirmAccount
