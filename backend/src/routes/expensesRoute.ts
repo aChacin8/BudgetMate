@@ -1,30 +1,39 @@
-import express  from "express";
+import express from "express";
 import { ExpenseController } from "../controllers/earning/ExpenseController";
 import { validateExpenseInput } from "../middlewares/budget/validateBudgetExpense";
 import { handleInputErrors } from "../middlewares/hadleInputErrors";
 import { validateExpenseById, validateExpenseExists } from "../middlewares/earnings/validateExpense";
+import { deleteLimiter, getLimiter, postLimiter } from "../config/limiter";
 
 const expenseRouter = express.Router();
 
 expenseRouter.param('expenseId', validateExpenseById)
 expenseRouter.param('expenseId', validateExpenseExists)
 
-expenseRouter.post('', 
-                validateExpenseInput, 
-                handleInputErrors, 
-                ExpenseController.createExpense
-            );
+expenseRouter.post('',
+    postLimiter,
+    validateExpenseInput,
+    handleInputErrors,
+    ExpenseController.createExpense
+);
 
-expenseRouter.get('', ExpenseController.getExpenses);
+expenseRouter.get('', getLimiter, ExpenseController.getExpenses);
 
-expenseRouter.get('/:expenseId', handleInputErrors, ExpenseController.getExpenseById);
+expenseRouter.get('/:expenseId',
+    getLimiter,
+    handleInputErrors,
+    ExpenseController.getExpenseById);
 
-expenseRouter.patch('/:expenseId', 
-                validateExpenseInput,
-                handleInputErrors,
-                ExpenseController.updateExpense
-            );
+expenseRouter.patch('/:expenseId',
+    postLimiter,
+    validateExpenseInput,
+    handleInputErrors,
+    ExpenseController.updateExpense
+);
 
-expenseRouter.delete('/:expenseId', handleInputErrors, ExpenseController.deleteExpense)
+expenseRouter.delete('/:expenseId',
+    deleteLimiter,
+    handleInputErrors, 
+    ExpenseController.deleteExpense)
 
 export default expenseRouter;
