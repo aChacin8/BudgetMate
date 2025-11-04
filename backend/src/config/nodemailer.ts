@@ -10,7 +10,7 @@ const { EMAIL_HOST, EMAIL_PORT, EMAIL_USER, EMAIL_PASS } = process.env;
 const configMail = () : TransportConfig => {
     return {
         host: EMAIL_HOST,
-        port: +EMAIL_PORT, //Se agrega el + para convertir a number
+        port: +EMAIL_PORT,
         auth: {
             user: EMAIL_USER,
             pass: EMAIL_PASS
