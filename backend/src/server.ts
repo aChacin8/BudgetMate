@@ -8,6 +8,7 @@ import { CryptoEmail } from './utils/cryptoEmail'
 import { budgetRouter } from './routes/budgetRoute'
 import expenseRouter from './routes/expensesRoute'
 import { authRouter } from './routes/authRoute'
+import { globalLimiter } from './config/limiter'
 
 const connectDB = async () => {
     try {
@@ -38,6 +39,8 @@ const app = express();
 connectDB()
 app.use(morgan('dev'))
 app.use(express.json())
+
+app.use(globalLimiter)
 
 app.use('/api/budgets', budgetRouter)
 app.use('/api/expenses', expenseRouter)
