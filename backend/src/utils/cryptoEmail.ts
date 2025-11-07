@@ -33,4 +33,15 @@ export class CryptoEmail {
         if (!decrypted) throw new Error('Invalid key or nonce');
         return sodium.to_string(decrypted);
     }
+    
+    static async hashEmail(email: string) {
+        await sodium.ready;
+
+        const key = sodium.from_base64(process.env.EMAIL_HASH_SECRET!, sodium.base64_variants.ORIGINAL);
+        const normalized = email.trim().toLowerCase();
+        const hashBytes = sodium.crypto_generichash(32, normalized, key);
+
+        return sodium.to_base64(hashBytes, sodium.base64_variants.ORIGINAL);
+    }
+
 }
