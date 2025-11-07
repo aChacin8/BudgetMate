@@ -34,7 +34,6 @@ class User extends Model {
 
     @Column({
         type: DataType.STRING(100),
-        allowNull: false,
         unique: true
     })
     declare emailHash: string
