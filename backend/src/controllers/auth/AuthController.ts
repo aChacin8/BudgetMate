@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
+import jwt from 'jsonwebtoken';
 
 import User from "../../models/user/User";
-import { hashPassword } from "../../utils/hash";
+import { comparePassword, hashPassword } from "../../utils/hash";
 import { CryptoEmail } from "../../utils/cryptoEmail";
 import { generateToken } from "../../utils/token";
 import { AuthEmail } from "../../emails/AuthEmail";
@@ -46,10 +47,10 @@ export class AuthController {
     static confirmAccount = async (req: Request, res: Response) => {
         const { token } = req.body;
         console.log(token);
-        
+
         try {
             const user = await User.findOne({ where: { token } });
-            if (!user){
+            if (!user) {
                 return res.status(404).json({ message: 'Invalid token code' });
             }
             user.isConfirmed = true;
@@ -64,11 +65,28 @@ export class AuthController {
     }
 
     static loginUser = async (req: Request, res: Response) => {
-        const user = await User.findOne({ where: { email: req.body.email } });
+        const { email, password } = req.body
 
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
+        try {
+            const { encrypted, nonce } = CryptoEmail.encryptEmail(email);
+
+            const user = await User.findOne({ where: { email: encrypted } });
+
+            if (!user) {
+                return res.status(404).json({ message: 'User not found' });
+            }
+            if (user.isConfirmed === false) {
+                return res.status(403).json({ message: 'Account not confirmed' });
+            }
+
+            const isPasswordValid = await comparePassword(password, user.password);
+            if(!isPasswordValid){
+                return res.status(401).json({ message: 'Invalid password' });
+            }
+            
+            res.json(user);
+        } catch (error) {
+
         }
-        res.json(user);
     }
 }
