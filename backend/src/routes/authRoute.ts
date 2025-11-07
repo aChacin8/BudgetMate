@@ -8,9 +8,6 @@ import { postLimiter, tokenLimiter } from '../config/limiter';
 
 export const authRouter = express.Router();
 
-authRouter.param('userId', validateUserById)
-authRouter.param('userId', validateUserExists)
-
 authRouter.post('',
     postLimiter,
     validateUserInput,
