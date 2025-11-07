@@ -10,18 +10,22 @@ import { generateJWT } from "../../utils/jwt";
 export class AuthController {
     static createUser = async (req: Request, res: Response) => {
         const { email, password, token, ...rest } = req.body;
-        
-        try {
-            const { encrypted, nonce } = CryptoEmail.encryptEmail(email);
-            const userExists = await User.findOne({ where: { email: encrypted } });
 
-if (userExists) {
-    return res.status(409).json({ message: 'User already exists' });
-}
+        try {
+            const emailHash = await CryptoEmail.hashEmail(email);
+            const userExists = await User.findOne({ where: { email: emailHash } });
+
+            if (userExists) {
+                return res.status(409).json({ message: 'User already exists' });
+            }
+
+            const { encrypted, nonce } = CryptoEmail.encryptEmail(email);
+            
             const user = await User.create({
                 ...rest,
                 email: encrypted,
-                nonce: nonce,
+                nonce,
+                emailHash,
                 password: await hashPassword(password),
                 token: generateToken()
             })
@@ -36,7 +40,7 @@ if (userExists) {
                 token: user.token
             })
 
-            res.status(201).json(user);
+            res.status(201).json({message: 'User created successfully. Please confirm your email.'});
         } catch (error) {
             console.error(error);
             res.status(500).json({ message: 'Internal server error' });
@@ -64,13 +68,13 @@ if (userExists) {
     }
 
     static loginUser = async (req: Request, res: Response) => {
-        console.log('Body recibido:', req.body);
         const { email, password } = req.body
 
         try {
             const { encrypted, nonce } = CryptoEmail.encryptEmail(email);
 
-            const user = await User.findOne({ where: { email: encrypted } });
+            const emailHash = await CryptoEmail.hashEmail(email);
+            const user = await User.findOne({ where: { email: emailHash } });
 
             if (!user) {
                 return res.status(404).json({ message: 'User not found' });
@@ -80,19 +84,19 @@ if (userExists) {
             }
 
             const isPasswordValid = await comparePassword(password, user.password);
-            if(!isPasswordValid){
+            if (!isPasswordValid) {
                 return res.status(401).json({ message: 'Invalid password' });
             }
-            
+
             const jwt = generateJWT(user.id);
-            
+
             return res.status(200).json({
                 message: 'Login successful',
                 jwt
             })
         } catch (error) {
             console.log(email);
-            
+
             console.error(error);
             res.status(500).json({ message: 'Internal server error' });
         }
