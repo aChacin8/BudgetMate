@@ -37,7 +37,7 @@ export class CryptoEmail {
     static async hashEmail(email: string) {
         await sodium.ready;
 
-        const key = sodium.from_base64(process.env.EMAIL_HASH_SECRET!, sodium.base64_variants.ORIGINAL);
+        const key = sodium.from_base64(process.env.EMAIL_HASH_KEY!, sodium.base64_variants.ORIGINAL);
         const normalized = email.trim().toLowerCase();
         const hashBytes = sodium.crypto_generichash(32, normalized, key);
 
