@@ -49,7 +49,6 @@ export class AuthController {
 
     static confirmAccount = async (req: Request, res: Response) => {
         const { token } = req.body;
-        console.log(token);
 
         try {
             const user = await User.findOne({ where: { token } });
@@ -67,14 +66,12 @@ export class AuthController {
         }
     }
 
-    static loginUser = async (req: Request, res: Response) => {
+    static loginUser = async (req: Request, res: Response) => {    
         const { email, password } = req.body
 
         try {
-            const { encrypted, nonce } = CryptoEmail.encryptEmail(email);
-
             const emailHash = await CryptoEmail.hashEmail(email);
-            const user = await User.findOne({ where: { email: emailHash } });
+            const user = await User.findOne({ where: { emailHash } });
 
             if (!user) {
                 return res.status(404).json({ message: 'User not found' });
