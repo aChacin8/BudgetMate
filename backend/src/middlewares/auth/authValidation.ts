@@ -2,9 +2,6 @@ import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { body } from 'express-validator';
 
-import User from '../../models/user/User';
-import { isLength } from 'validator';
-
 export const authValidation = async (req: Request, res: Response, next: NextFunction) => {
     const bearer = req.headers.authorization;
     if(!bearer) {
@@ -34,4 +31,15 @@ export const confirmAccountValidation = async (req: Request, res: Response, next
         .run(req)
 
     next();
+}
+
+export const loginValidation = async (req: Request, res: Response, next: NextFunction) => {
+    await body('email')
+        .notEmpty().withMessage('Email is required')
+        .isEmail().withMessage('Invalid email format')
+        .run(req);
+    await body('password')
+        .notEmpty().withMessage('Password is required')
+        .isLength({ min: 6 }).withMessage('Password must be at least 6 characters long')
+        .run(req);
 }
