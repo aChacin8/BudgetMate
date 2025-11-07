@@ -33,6 +33,13 @@ class User extends Model {
     declare nonce: string
 
     @Column({
+        type: DataType.STRING(100),
+        allowNull: false,
+        unique: true
+    })
+    declare emailHash: string
+
+    @Column({
         type: DataType.STRING,
         allowNull: false
     })
