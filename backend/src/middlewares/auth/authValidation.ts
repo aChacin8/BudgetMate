@@ -23,16 +23,6 @@ export const authValidation = async (req: Request, res: Response, next: NextFunc
     }
 }
 
-export const confirmAccountValidation = async (req: Request, res: Response, next: NextFunction) => {
-    await body('token')
-        .notEmpty().withMessage('Token is required')
-        .isInt().withMessage('Token must be numeric')
-        .isLength({ min: 6, max: 6 }).withMessage('Token must be 6 characters long')
-        .run(req)
-
-    next();
-}
-
 export const loginValidation = async (req: Request, res: Response, next: NextFunction) => {
     await body('email')
         .notEmpty().withMessage('Email is required')
@@ -42,4 +32,12 @@ export const loginValidation = async (req: Request, res: Response, next: NextFun
         .notEmpty().withMessage('Password is required')
         .isLength({ min: 6 }).withMessage('Password must be at least 6 characters long')
         .run(req);
+}
+
+export const forgotPasswordValidation = async (req: Request, res: Response, next: NextFunction) => {
+    await body('email')
+        .notEmpty().withMessage('Email is required')
+        .isEmail().withMessage('Invalid email format')
+        .run(req);
+    next();
 }
