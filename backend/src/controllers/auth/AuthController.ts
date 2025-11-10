@@ -106,4 +106,20 @@ export class AuthController {
             res.status(500).json({ message: 'Internal server error' });
         }
     }
+
+    static resetPassword = async (req: Request, res: Response) => {
+        const { token } = req.params;
+        const { password } = req.body; 
+
+        const user = await User.findOne({where: {token}})
+        if(!user){
+            return  res.status(404).json({message: 'Invalid token'})
+        }
+
+        user.password = await hashPassword (password);
+        user.token = null
+        await user.save();
+
+        res.status(200).json({message: 'Password reset successfully'})
+    }
 }
