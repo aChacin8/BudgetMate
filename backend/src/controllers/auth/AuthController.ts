@@ -92,8 +92,35 @@ export class AuthController {
                 jwt
             })
         } catch (error) {
-            console.log(email);
+            console.error(error);
+            res.status(500).json({ message: 'Internal server error' });
+        }
+    }
 
+    static forgotPassword = async (req: Request, res: Response) => {
+        const { email } = req.body;
+
+        try {
+            const emailHash = await CryptoEmail.hashEmail(email);
+            const user = await User.findOne({where: {emailHash}})
+            if(!user){
+                return res.status(404).json({message: 'User not found'})
+            }
+
+            const resetToken = generateToken();
+            user.token = resetToken;
+            await user.save();
+
+            await AuthEmail.sendResetPasswordEmail({
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                nonce: user.nonce,
+                token: resetToken,
+            })
+
+            res.status(200).json({message: 'Password reset email sent'})
+        } catch (error) {
             console.error(error);
             res.status(500).json({ message: 'Internal server error' });
         }
