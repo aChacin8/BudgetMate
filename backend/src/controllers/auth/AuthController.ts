@@ -88,8 +88,7 @@ export class AuthController {
                 return res.status(404).json({message: 'User not found'})
             }
 
-            const resetToken = generateToken();
-            user.token = resetToken;
+            user.token = generateToken();
             await user.save();
 
             await AuthEmail.sendResetPasswordEmail({
@@ -97,7 +96,7 @@ export class AuthController {
                 lastName: user.lastName,
                 email: user.email,
                 nonce: user.nonce,
-                token: resetToken,
+                token: user.token,
             })
 
             res.status(200).json({message: 'Password reset email sent'})
