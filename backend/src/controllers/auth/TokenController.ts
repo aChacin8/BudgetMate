@@ -20,4 +20,20 @@ export class TokenController {
             res.status(500).json({ message: 'Internal server error' });
         }
     }
+
+    static tokenResetPassword = async (req: Request, res: Response) => {
+        const { token } = req.body;
+
+        try {
+            const tokenExists = await User.findOne({where: {token}})
+            if(!tokenExists){
+                return res.status(404).json({message: 'Invalid token code'})
+            }
+            res.status(200).json({message: 'Token is valid'})
+
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ message: 'Internal server error' });
+        }
+    }
 }
