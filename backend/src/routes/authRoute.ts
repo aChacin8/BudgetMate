@@ -4,7 +4,7 @@ import { AuthController } from '../controllers/auth/AuthController';
 import { TokenController } from '../controllers/auth/TokenController';
 import { handleInputErrors } from '../middlewares/hadleInputErrors';
 import { validateUserInput } from '../middlewares/validateUsers';
-import { forgotPasswordValidation } from '../middlewares/auth/authValidation';
+import { forgotPasswordValidation, resetPasswordValidation } from '../middlewares/auth/authValidation';
 import { confirmAccountValidation, resetTokenValidation } from '../middlewares/auth/tokenValidations';
 import { postLimiter, tokenLimiter } from '../config/limiter';
 
@@ -43,8 +43,10 @@ authRouter.post('/token-password',
     handleInputErrors,
     TokenController.tokenResetPassword
 )
-authRouter.post('/reset-password',
+authRouter.post('/reset-password/:token',
     postLimiter,
-    
+    resetPasswordValidation,
+    handleInputErrors,
+    AuthController.resetPassword
 )
 
