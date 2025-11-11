@@ -1,7 +1,6 @@
 import express from 'express';
 
 import { AuthController } from '../controllers/auth/AuthController';
-import { TokenController } from '../controllers/auth/TokenController';
 import { handleInputErrors } from '../middlewares/hadleInputErrors';
 import { validateUserInput } from '../middlewares/validateUsers';
 import { forgotPasswordValidation, resetPasswordValidation } from '../middlewares/auth/authValidation';
@@ -21,7 +20,7 @@ authRouter.post('/confirm-account',
     tokenLimiter,
     confirmAccountValidation,
     handleInputErrors,
-    TokenController.confirmAccount
+    AuthController.confirmAccount
 )
 
 authRouter.post('/login', 

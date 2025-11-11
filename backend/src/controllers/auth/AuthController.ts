@@ -20,7 +20,7 @@ export class AuthController {
             }
 
             const { encrypted, nonce } = CryptoEmail.encryptEmail(email);
-            
+
             const user = await User.create({
                 ...rest,
                 email: encrypted,
@@ -40,14 +40,14 @@ export class AuthController {
                 token: user.token
             })
 
-            res.status(201).json({message: 'User created successfully. Please confirm your email.'});
+            res.status(201).json({ message: 'User created successfully. Please confirm your email.' });
         } catch (error) {
             console.error(error);
             res.status(500).json({ message: 'Internal server error' });
         }
     }
 
-    static loginUser = async (req: Request, res: Response) => {    
+    static loginUser = async (req: Request, res: Response) => {
         const { email, password } = req.body
 
         try {
@@ -78,14 +78,33 @@ export class AuthController {
         }
     }
 
+    static confirmAccount = async (req: Request, res: Response) => {
+        const { token } = req.body;
+
+        try {
+            const user = await User.findOne({ where: { token } });
+            if (!user) {
+                return res.status(404).json({ message: 'Invalid token code' });
+            }
+            user.isConfirmed = true;
+            user.token = null;
+            await user.save();
+
+            return res.status(200).json({ message: 'Account confirmed successfully' });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ message: 'Internal server error' });
+        }
+    }
+
     static forgotPassword = async (req: Request, res: Response) => {
         const { email } = req.body;
 
         try {
             const emailHash = await CryptoEmail.hashEmail(email);
-            const user = await User.findOne({where: {emailHash}})
-            if(!user){
-                return res.status(404).json({message: 'User not found'})
+            const user = await User.findOne({ where: { emailHash } })
+            if (!user) {
+                return res.status(404).json({ message: 'User not found' })
             }
 
             user.token = generateToken();
@@ -99,7 +118,7 @@ export class AuthController {
                 token: user.token,
             })
 
-            res.status(200).json({message: 'Password reset email sent'})
+            res.status(200).json({ message: 'Password reset email sent' })
         } catch (error) {
             console.error(error);
             res.status(500).json({ message: 'Internal server error' });
@@ -108,17 +127,17 @@ export class AuthController {
 
     static resetPassword = async (req: Request, res: Response) => {
         const { token } = req.params;
-        const { password } = req.body; 
+        const { password } = req.body;
 
-        const user = await User.findOne({where: {token}})
-        if(!user){
-            return  res.status(404).json({message: 'Invalid token'})
+        const user = await User.findOne({ where: { token } })
+        if (!user) {
+            return res.status(404).json({ message: 'Invalid token' })
         }
 
-        user.password = await hashPassword (password);
+        user.password = await hashPassword(password);
         user.token = null
         await user.save();
 
-        res.status(200).json({message: 'Password reset successfully'})
+        res.status(200).json({ message: 'Password reset successfully' })
     }
 }
