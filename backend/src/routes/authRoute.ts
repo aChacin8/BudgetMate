@@ -37,12 +37,6 @@ authRouter.post('/forgot-password',
     AuthController.forgotPassword
 )
 
-authRouter.post('/token-password',
-    tokenLimiter,
-    resetTokenValidation,
-    handleInputErrors,
-    TokenController.tokenResetPassword
-)
 authRouter.post('/reset-password/:token',
     postLimiter,
     resetPasswordValidation,
