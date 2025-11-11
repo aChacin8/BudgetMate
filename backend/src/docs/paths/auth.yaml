@@ -62,3 +62,244 @@ paths:
                   message:
                     type: string
                     example: "Internal server error"
+
+  /auth/login:
+    post:
+      summary: User login
+      description: >
+        Authenticates a user and returns a JWT token for session management.
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  example: "user@mail.com"
+                password:
+                  type: string
+                  example: "UserPassword123!"
+      responses:
+        200:
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+        401:
+          description: Invalid credentials  
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Invalid email or password"
+        500:
+          description: Internal server error   
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Internal server error"
+
+  /auth/confirm-email:
+    post:
+      summary: Confirm user email
+      description: >
+        Confirms a user's email address using a one-time token sent via email during registration.
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - token
+              properties:
+                email:
+                  type: string
+                  example: "user@mail.com"
+                token:
+                  type: string
+                  example: "123456"
+      responses:
+        200: 
+          description: Email confirmed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Email confirmed successfully"
+        400:
+          description: Invalid token or email  
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Invalid token or email"
+        500:
+          description: Internal server error   
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Internal server error"
+
+  /auth/forgot-password:
+    post:
+      summary: Request password reset
+      description: >
+        Initiates the password reset process by sending a reset token to the user's email.
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+              properties:
+                email:
+                  type: string
+                  example: "user@mail.com"
+      responses:
+        200:
+          description: Password reset email sent
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Password reset email sent"
+        404:
+          description: User not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "User not found"
+        500:
+          description: Internal server error   
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Internal server error"
+
+  /auth/token-reset-password:
+    post:
+      summary: Validate reset token
+      description: >
+        Validates the password reset token sent to the user's email.
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - token
+              properties:
+                
+
+  /auth/reset-password/:token:
+    post:
+      summary: Reset password using token
+      description: >
+        Resets the user's password using a valid reset token sent to their email.
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - token
+                - password
+              properties:
+                email:
+                  type: string
+                  example: "user@mail.com"
+                token:
+                  type: string
+                  example: "123456"
+                password:
+                  type: string
+                  example: "NewPassword123!"
+      responses:
+        200:
+          description: Password reset successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Password reset successfully"
+        404:
+          description: Invalid token or email  
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Invalid token or email"
+        500:
+          description: Internal server error   
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Internal server error"
+
+  
+
