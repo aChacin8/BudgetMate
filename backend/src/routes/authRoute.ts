@@ -43,3 +43,6 @@ authRouter.post('/reset-password/:token',
     AuthController.resetPassword
 )
 
+authRouter.get('/user',
+    AuthController.jwtAuthorization
+)
