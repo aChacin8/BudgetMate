@@ -8,3 +8,8 @@ export const generateJWT = (id: string) => {
     });
     return token; 
 }
+
+export const verifyJWT = (token: string) => {
+    const decoded = jwt.verify(token, JWT_SECRET)
+    return decoded;
+}
