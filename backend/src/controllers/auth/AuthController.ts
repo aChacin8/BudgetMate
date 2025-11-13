@@ -5,7 +5,7 @@ import { comparePassword, hashPassword } from "../../utils/hash";
 import { CryptoEmail } from "../../utils/cryptoEmail";
 import { generateToken } from "../../utils/token";
 import { AuthEmail } from "../../emails/AuthEmail";
-import { generateJWT } from "../../utils/jwt";
+import { generateJWT, verifyJWT } from "../../utils/jwt";
 
 export class AuthController {
     static createUser = async (req: Request, res: Response) => {
@@ -139,5 +139,24 @@ export class AuthController {
         await user.save();
 
         res.status(200).json({ message: 'Password reset successfully' })
+    }
+
+    static jwtAuthorization = async (req: Request, res: Response) => {
+        const bearer = req.headers.authorization;
+        if(!bearer) {
+            return res.status(401).json({ message: 'Unauthorized, no token provided' });
+        }
+        
+        const [, token] = bearer.split(' ')
+        if (!token){
+            return res.status(401).json({ message: 'Unauthorized, Token no sent' });
+        }
+        
+        try {
+            const result = verifyJWT(token);
+            res.status(200).json({ message: 'Token is valid', result})
+        } catch (error) {
+            return res.status(401).json({ message: 'Unauthorized, Invalid token' });
+        }
     }
 }
