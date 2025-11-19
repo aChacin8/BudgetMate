@@ -3,9 +3,9 @@ import express from 'express';
 import { AuthController } from '../controllers/auth/AuthController';
 import { handleInputErrors } from '../middlewares/hadleInputErrors';
 import { validateUserInput } from '../middlewares/validateUsers';
-import { forgotPasswordValidation, resetPasswordValidation } from '../middlewares/auth/authValidation';
+import { authValidation, forgotPasswordValidation, resetPasswordValidation } from '../middlewares/auth/authValidation';
 import { confirmAccountValidation, resetTokenValidation } from '../middlewares/auth/tokenValidations';
-import { postLimiter, tokenLimiter } from '../config/limiter';
+import { getLimiter, postLimiter, tokenLimiter } from '../config/limiter';
 
 export const authRouter = express.Router();
 
@@ -44,5 +44,8 @@ authRouter.post('/reset-password/:token',
 )
 
 authRouter.get('/user',
-    AuthController.jwtAuthorization
+    getLimiter,
+    authValidation,
+    handleInputErrors,
+    AuthController.user
 )
