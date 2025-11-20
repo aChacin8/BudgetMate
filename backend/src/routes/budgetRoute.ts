@@ -4,8 +4,8 @@ import { BudgetController } from '../controllers/budget/BudgetsControllers';
 import { BudgetExpenseController } from '../controllers/budget/BudgetExpenseController';
 
 import { handleInputErrors } from '../middlewares/hadleInputErrors';
-import { validateBudgetInput, validateBudgetById, validateBudgetExists } from '../middlewares/budget/validateBudget';
-import { validateBudgetExpenseById, validateBudgetExpenseExists, validateExpenseInput } from '../middlewares/budget/validateBudgetExpense';
+import { validateBudgetInput, validateBudgetById, validateBudgetExists } from '../middlewares/budget/budgetValidation';
+import { validateBudgetExpenseById, validateBudgetExpenseExists, validateExpenseInput } from '../middlewares/budget/budgetExpenseValidation';
 import { deleteLimiter, getLimiter, postLimiter } from '../config/limiter';
 import { authValidation } from '../middlewares/auth/authValidation';
 
