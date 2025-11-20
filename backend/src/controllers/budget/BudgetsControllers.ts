@@ -19,6 +19,9 @@ export class BudgetController {
         try {
             const budgets = await Budget.findAll({
                 order: [['amount', 'DESC']],
+                where: {
+                    earningId: req.earning.id
+                }
             })
             if (!budgets){
             return res.status(404).json({message: 'Budgets not found'})
