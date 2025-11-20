@@ -3,7 +3,8 @@ import express from 'express';
 import { AuthController } from '../controllers/auth/AuthController';
 import { handleInputErrors } from '../middlewares/hadleInputErrors';
 import { validateUserInput } from '../middlewares/validateUsers';
-import { authValidation, checkPasswordValidation, forgotPasswordValidation, resetPasswordValidation, updatePasswordValidation } from '../middlewares/auth/authValidation';
+import { authValidation} from '../middlewares/auth/authValidation';
+import {  checkPasswordValidation, forgotPasswordValidation, resetPasswordValidation, updatePasswordValidation } from '../middlewares/auth/passwordValidation'
 import { confirmAccountValidation, resetTokenValidation } from '../middlewares/auth/tokenValidations';
 import { getLimiter, postLimiter, tokenLimiter } from '../config/limiter';
 
