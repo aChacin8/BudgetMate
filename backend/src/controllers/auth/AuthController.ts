@@ -144,4 +144,43 @@ export class AuthController {
     static user = async (req: Request, res: Response) => {
         res.status(200).json({ message: 'Token is valid', user: req.user } )
     }
+
+    static updatePassword = async (req: Request, res: Response) => {
+        const { currentPassword, newPassword } = req.body;
+
+        const { id } = req.user;
+        const user = await User.findByPk(id);
+        if(!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        const isPasswordValid = await comparePassword(currentPassword, user.password);
+        if(!isPasswordValid){
+            return  res.status(401).json({ message: 'Current password is incorrect' });
+        }
+
+        if (currentPassword === newPassword){
+            return res.status(400).json({ message: 'New password must be different from the current password' });
+        }
+
+        user.password = await hashPassword(newPassword);
+        await user.save();
+
+        res.status(200).json({ message: 'Password updated successfully' });
+    }
+
+    static checkPassword = async(req: Request, res: Response) => {
+        const { password } = req.body;
+
+        const { id } = req.user;
+        const user = await User.findByPk(id);
+        if(!user){
+            return res.status(404).json({ message: 'User not found' });
+        }
+        const isPasswordValid = await comparePassword(password, user.password);
+        if(!isPasswordValid){
+            return  res.status(401).json({ message: 'Current password is incorrect' });
+        }
+        res.status(200).json({message: 'Password is correct' });
+    }
 }
