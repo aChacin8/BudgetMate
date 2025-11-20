@@ -17,7 +17,7 @@ export class EarningController {
 
     static getEarning = async (req: Request, res: Response) => {
         try {
-            const earning = await Earning.findAll({
+            const earning = await Earning.findOne({
                 where: {
                     userId: req.user.id
                 }
