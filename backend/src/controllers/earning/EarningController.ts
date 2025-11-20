@@ -14,4 +14,20 @@ export class EarningController {
             return res.status(500).json({message: 'Failed to create earning'})
         }
     }
+
+    static getEarning = async (req: Request, res: Response) => {
+        try {
+            const earning = await Earning.findAll({
+                where: {
+                    userId: req.user.id
+                }
+            })
+            if(!earning){
+                return  res.status(404).json({message: 'Earnings not found'})
+            }
+            res.status(200).json({message: 'Earnings retrieved successfully', earning})
+        } catch (error) {
+            return res.status(500).json({message: 'Failed to retrieve earnings'})
+        }
+    }
 }
