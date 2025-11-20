@@ -3,12 +3,14 @@ import BudgetExpense from "../models/budget/BudgetExpense";
 import Budget from "../models/budget/Budget";
 import Expense from "../models/earning/EarningExpense";
 import ExtraEarnings from "../models/earning/ExtraEarning";
+import Earning from "../models/earning/Earning";
 
 
 declare global {
     namespace Express {
         interface Request {
             user?: User;
+            earning?: Earning;
             expense?: Expense;
             budget?: Budget;
             budgetExpense?: BudgetExpense;
