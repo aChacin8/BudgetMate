@@ -3,7 +3,7 @@ import express from 'express';
 import { AuthController } from '../controllers/auth/AuthController';
 import { handleInputErrors } from '../middlewares/hadleInputErrors';
 import { validateUserInput } from '../middlewares/validateUsers';
-import { authValidation, forgotPasswordValidation, resetPasswordValidation } from '../middlewares/auth/authValidation';
+import { authValidation, checkPasswordValidation, forgotPasswordValidation, resetPasswordValidation, updatePasswordValidation } from '../middlewares/auth/authValidation';
 import { confirmAccountValidation, resetTokenValidation } from '../middlewares/auth/tokenValidations';
 import { getLimiter, postLimiter, tokenLimiter } from '../config/limiter';
 
@@ -48,4 +48,20 @@ authRouter.get('/user',
     authValidation,
     handleInputErrors,
     AuthController.user
+)
+
+authRouter.post('/update-password',
+    postLimiter,
+    authValidation,
+    updatePasswordValidation,
+    handleInputErrors,
+    AuthController.updatePassword
+)
+
+authRouter.post('/check-password',
+    postLimiter,
+    authValidation,
+    checkPasswordValidation,
+    handleInputErrors,
+    AuthController.checkPassword
 )
