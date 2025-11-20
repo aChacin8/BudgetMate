@@ -1,6 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import { body } from "express-validator";
+import { Op } from "sequelize"; //To use operator with sequelize
 
+import Earning from "../../models/earning/Earning";
 
 export const earningValidation = async (req: Request, res: Response, next: NextFunction) => {
     await body('baseAmount')
@@ -8,11 +10,52 @@ export const earningValidation = async (req: Request, res: Response, next: NextF
         .isNumeric().withMessage('Base amount must be a number')
         .custom((value) => value > 0).withMessage('Base amount must be greater than 0')
         .run(req);
-    await body('userId')
-        .notEmpty().withMessage('User ID is required')
-        .isInt().withMessage('User ID must be an integer')
-        .custom((value) => value > 0).withMessage('User ID must be greater than 0')
+    await body("periodStart")
+        .notEmpty().withMessage("Period start date is required")
+        .isISO8601().withMessage("Invalid period start date format")
         .run(req);
+    await body("periodEnd")
+        .notEmpty().withMessage("Period end date is required")
+        .isISO8601().withMessage("Invalid period end date format")
+        .run(req);
+
     next();
 }
 
+export const earningPeriodValidation = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { periodStart, periodEnd } = req.body;
+
+        const existingEarning = await Earning.findOne({
+            where: {
+                userId: req.user.id,
+                [Op.or]: [
+                    {
+                        periodStart: { [Op.between]: [periodStart, periodEnd] }
+                    },
+                    {
+                        periodEnd: { [Op.between]: [periodStart, periodEnd]}
+                    },
+                    {
+                        [Op.and]: [
+                            {
+                                periodStart: {[Op.lt]: periodStart}
+                            },
+                            {
+                                periodEnd: {[Op.gt]: periodEnd}
+                            }
+                        ]
+                    }
+                ]
+            }
+        })
+
+        if(existingEarning){
+            return res.status(40).json({ message: 'An earning already exists for this period.'})
+        }
+
+        next();
+    } catch (error) {
+        return res.status(500).json({ message: "Internal server error" });
+    }
+}
