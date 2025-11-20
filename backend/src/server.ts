@@ -9,6 +9,7 @@ import { budgetRouter } from './routes/budgetRoute'
 import expenseRouter from './routes/expensesRoute'
 import { authRouter } from './routes/authRoute'
 import { globalLimiter } from './config/limiter'
+import { earningRouter } from './routes/earningRoute'
 
 const connectDB = async () => {
     try {
@@ -42,6 +43,7 @@ app.use(express.json())
 
 app.use(globalLimiter)
 
+app.use('/api/earning', earningRouter)
 app.use('/api/budgets', budgetRouter)
 app.use('/api/expenses', expenseRouter)
 app.use('/api/auth', authRouter)
