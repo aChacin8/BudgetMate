@@ -84,3 +84,35 @@ export const resetPasswordValidation = async (req: Request, res: Response, next:
         .run(req);
     next();
 }
+
+export const updatePasswordValidation = async (req: Request, res: Response, next: NextFunction) => {
+    await body('currentPassword')
+        .notEmpty().withMessage('Current Password is required')
+        .isLength({ min: 8 }).withMessage('Current Password must be at least 6 characters long')
+        .matches(/[0-9]/).withMessage('Current Password must contain at least one number')
+        .matches(/[A-Z]/).withMessage('Current Password must contain at least one uppercase letter')
+        .matches(/[a-z]/).withMessage('Current Password must contain at least one lowercase letter')
+        .matches(/[@$!%*?&]/).withMessage('Current Password must contain at least one special character')
+        .run(req);
+    await body('newPassword')
+        .notEmpty().withMessage('New Password is required')
+        .isLength({ min: 8 }).withMessage('New Password must be at least 6 characters long')
+        .matches(/[0-9]/).withMessage('New Password must contain at least one number')
+        .matches(/[A-Z]/).withMessage('New Password must contain at least one uppercase letter')
+        .matches(/[a-z]/).withMessage('New Password must contain at least one lowercase letter')
+        .matches(/[@$!%*?&]/).withMessage('New Password must contain at least one special character')
+        .run(req);
+    next();
+}
+
+export const checkPasswordValidation = async (req: Request, res: Response, next: NextFunction) => {
+    await body('password')
+        .notEmpty().withMessage('Password is required')
+        .isLength({ min: 8 }).withMessage('Password must be at least 6 characters long')
+        .matches(/[0-9]/).withMessage('Password must contain at least one number')
+        .matches(/[A-Z]/).withMessage('Password must contain at least one uppercase letter')
+        .matches(/[a-z]/).withMessage('Password must contain at least one lowercase letter')
+        .matches(/[@$!%*?&]/).withMessage('Password must contain at least one special character')
+        .run(req);
+    next();
+}
