@@ -1,6 +1,6 @@
 import express from 'express';
 import { EarningController } from '../controllers/earning/EarningController';
-import { earningValidation } from '../middlewares/earnings/earningValidation';
+import { earningPeriodValidation, earningValidation } from '../middlewares/earnings/earningValidation';
 import { authValidation } from '../middlewares/auth/authValidation';
 import { getLimiter, postLimiter } from '../config/limiter';
 
@@ -11,6 +11,7 @@ earningRouter.use(authValidation);
 earningRouter.post('',
     postLimiter,
     earningValidation,
+    earningPeriodValidation,
     EarningController.createEarning
 )
 
