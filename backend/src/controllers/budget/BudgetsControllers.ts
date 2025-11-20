@@ -6,6 +6,7 @@ export class BudgetController {
     static createbudget = async (req: Request, res: Response)=> {
         try {
             const budgets = await Budget.create(req.body)
+            budgets.earningId = req.earning.id
             await budgets.save()
             res.status(201).json(budgets)    
         } catch (error) {
