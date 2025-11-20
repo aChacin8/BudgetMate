@@ -2,7 +2,7 @@ import express from "express";
 import { ExpenseController } from "../controllers/earning/ExpenseController";
 import { validateExpenseInput } from "../middlewares/budget/budgetExpenseValidation";
 import { handleInputErrors } from "../middlewares/hadleInputErrors";
-import { validateExpenseById, validateExpenseExists } from "../middlewares/earnings/expenseValidation";
+import { validateExpenseById, validateExpenseExists } from "../middlewares/earnings/earningExpenseValidation";
 import { deleteLimiter, getLimiter, postLimiter } from "../config/limiter";
 
 const expenseRouter = express.Router();
