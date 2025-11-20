@@ -7,8 +7,11 @@ import { handleInputErrors } from '../middlewares/hadleInputErrors';
 import { validateBudgetInput, validateBudgetById, validateBudgetExists } from '../middlewares/budget/validateBudget';
 import { validateBudgetExpenseById, validateBudgetExpenseExists, validateExpenseInput } from '../middlewares/budget/validateBudgetExpense';
 import { deleteLimiter, getLimiter, postLimiter } from '../config/limiter';
+import { authValidation } from '../middlewares/auth/authValidation';
 
 export const budgetRouter = express.Router();
+
+budgetRouter.use(authValidation);
 
 budgetRouter.param('budgetId', validateBudgetById)
 budgetRouter.param('budgetId', validateBudgetExists)
