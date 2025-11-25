@@ -1,14 +1,15 @@
 import { Request, Response, NextFunction } from "express";
 import { body, param } from 'express-validator';
 
-import User from '../models/user/User';
+import User from '../../models/user/User';
+import { CryptoEmail } from "../../utils/cryptoEmail";
 
 export const validateUserInput = async (req: Request, res: Response, next: NextFunction) => {
     await body('firstName')
         .notEmpty().withMessage('First name is required')
         .isLength({ max: 50 }).withMessage('First name must have a maximum of 50 characters')
         .run(req);
-    await body ('lastName')
+    await body('lastName')
         .notEmpty().withMessage('Last name is required')
         .isLength({ max: 50 }).withMessage('First name must have a maximum of 50 characters')
         .run(req);
@@ -28,6 +29,27 @@ export const validateUserInput = async (req: Request, res: Response, next: NextF
         .isLength({ min: 7, max: 15 }).withMessage('Phone number must be between 7 and 15 digits')
         .isNumeric().withMessage('Phone number must contain only numbers')
         .run(req);
+
+    try {
+        const { phone, email } = req.body;
+
+        const phoneExists = await User.findOne({where: { phone }});
+        if (phoneExists) {
+            return res.status(409).json({ message: 'This phone number is already used' });
+        }
+
+        if (email) {
+            const emailHash = await CryptoEmail.hashEmail(email);
+            const emailExists = await User.findOne({ where: { emailHash } });
+            if (emailExists) {
+                return res.status(409).json({ message: 'This email is already used' });
+            }
+        }
+
+    } catch (error) {
+        return res.status(500).json({ message: 'Internal Server Error' });
+    }
+
     next();
 }
 
@@ -45,8 +67,8 @@ export const validateUserExists = async (req: Request, res: Response, next: Next
         const { userId } = req.params;
 
         const user = await User.findByPk(userId);
-        if(!user){
-            return res.status(404).json({ message: 'User not found'});
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
         }
         req.user = user;
         next();
