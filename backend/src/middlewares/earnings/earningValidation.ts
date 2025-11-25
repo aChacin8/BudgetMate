@@ -26,7 +26,6 @@ export const earningValidation = async (req: Request, res: Response, next: NextF
     next();
 }
 
-
 export const earningPeriodValidation = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const periodStart = new Date(req.body.periodStart);
