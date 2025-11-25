@@ -41,6 +41,8 @@ class Budget extends Model {
     declare budgetExpenses: BudgetExpense[]
 
     @ForeignKey(() => Earning)
+    @Column({ field: 'earning_id', type: DataType.INTEGER })
+
     declare earningId: number
 
     @BelongsTo(()=> Earning)
