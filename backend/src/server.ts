@@ -43,7 +43,7 @@ app.use(express.json())
 
 app.use(globalLimiter)
 
-app.use('/api/earning', earningRouter)
+app.use('/api/earnings', earningRouter)
 app.use('/api/budgets', budgetRouter)
 app.use('/api/expenses', expenseRouter)
 app.use('/api/auth', authRouter)
