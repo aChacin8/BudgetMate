@@ -6,7 +6,6 @@ export class EarningController {
     static createEarning = async (req: Request, res: Response) => {
         try {
             const earning = await Earning.create(req.body)
-            earning.userId = req.user.id
 
             await earning.save()
             res.status(201).json('Earning created successfully')
