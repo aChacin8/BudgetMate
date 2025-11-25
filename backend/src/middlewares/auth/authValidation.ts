@@ -43,7 +43,6 @@ export const authValidation = async (req: Request, res: Response, next: NextFunc
     }
 };
 
-
 export const loginValidation = async (req: Request, res: Response, next: NextFunction) => {
     await body('email')
         .notEmpty().withMessage('Email is required')
