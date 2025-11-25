@@ -46,7 +46,8 @@ class User extends Model {
 
     @Column({
         type: DataType.STRING(20),
-        allowNull: true
+        allowNull: true,
+        unique: true
     })
     declare phone : string
     
