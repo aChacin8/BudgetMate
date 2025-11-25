@@ -16,16 +16,19 @@ class Earning extends Model {
     declare baseAmount: number
 
     @Column({
-        type: DataType.DATE
+        type: DataType.DATE,
+        allowNull: false
     })
     declare periodStart: Date
 
     @Column({
-        type: DataType.DATE
+        type: DataType.DATE,
+        allowNull: false
     })
     declare periodEnd: Date
 
     @ForeignKey(()=> User)
+    @Column({ field: 'user_id', type: DataType.INTEGER })
     declare userId: number
 
     @BelongsTo(()=> User)
