@@ -36,6 +36,7 @@ export const earningPeriodValidation = async (req: Request, res: Response, next:
         const existingEarning = await Earning.findOne({
             where: {
                 userId: req.user.id,
+                id: { [Op.ne]: req.params.earningId },
                 [Op.or]: [
                     {
                         periodStart: { [Op.between]: [periodStart, periodEnd] }
