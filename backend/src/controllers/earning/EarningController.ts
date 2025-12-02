@@ -34,14 +34,14 @@ export class EarningController {
         const { earningId } = req.params;
 
         try {
-            const { baseAmount, periodStart, periodEnd } = req.body;
+            const { baseAmount, periodType, periodMonth, periodYear } = req.body;
 
             const earning = await Earning.findByPk(earningId);
             if (!earning) {
                 return res.status(404).json({ message: "Earning doesn't exist" });
             }
 
-            await earning.update({ baseAmount, periodStart, periodEnd });
+            await earning.update({ baseAmount, periodType,periodMonth, periodYear });
 
             res.status(200).json({ message: "Earning updated successfully", earning });
         } catch (error) {
