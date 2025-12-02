@@ -40,7 +40,11 @@ class Earning extends Model {
     declare periodNumber: number | null; // 1 o 2 si es quincenal
 
     @ForeignKey(() => User)
-    @Column({ field: 'user_id', type: DataType.INTEGER })
+    @Column({ 
+        field: 'user_id', 
+        type: DataType.INTEGER, 
+        allowNull: false
+    })
     declare userId: number
 
     @BelongsTo(() => User)
