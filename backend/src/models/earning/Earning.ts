@@ -43,7 +43,8 @@ class Earning extends Model {
     @Column({ 
         field: 'user_id', 
         type: DataType.INTEGER, 
-        allowNull: false
+        allowNull: false,
+        unique: true
     })
     declare userId: number
 
