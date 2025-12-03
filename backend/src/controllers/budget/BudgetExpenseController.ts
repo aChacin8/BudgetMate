@@ -4,7 +4,11 @@ import BudgetExpense from "../../models/budget/BudgetExpense"
 export class BudgetExpenseController {
     static createBudgetExpense = async (req: Request, res: Response) => {
         try {
-            const expense = await BudgetExpense.create(req.body)
+            const expense = await BudgetExpense.create({
+                ...req.body,
+                userId: req.user.id,
+                budgetId: req.budget.id
+            })
             expense.budgetId = req.budget.id
             expense.save()
             res.status(201).json('Budget Expense created successfully')
