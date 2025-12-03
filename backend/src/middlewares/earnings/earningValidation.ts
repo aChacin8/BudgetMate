@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { body } from "express-validator";
 
-export const earningValidation = async (req: Request, res: Response, next: NextFunction) => {
+export const validateEarning = async (req: Request, res: Response, next: NextFunction) => {
 
     await body('baseAmount')
         .notEmpty().withMessage('Base amount is required')
@@ -26,4 +26,3 @@ export const earningValidation = async (req: Request, res: Response, next: NextF
 
     next();
 }
-
