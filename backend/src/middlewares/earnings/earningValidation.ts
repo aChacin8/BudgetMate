@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { body } from "express-validator";
+import Earning from "../../models/earning/Earning";
 
 export const validateEarningInput = async (req: Request, res: Response, next: NextFunction) => {
 
@@ -25,4 +26,23 @@ export const validateEarningInput = async (req: Request, res: Response, next: Ne
         .run(req);
 
     next();
+}
+
+export const validateEarning = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { earningId } = req.params;
+        const earning = await Earning.findOne({
+            where: {
+                id: earningId,
+                userId: req.user.id
+            }
+        })
+        if (!earning){
+            return res.status(404).json({ message: "Earning not found" });
+        }
+        req.earning = earning;
+        next();
+    } catch (error) {
+        return res.status(500).json({ message: 'Internal Server Error' })
+    }
 }
