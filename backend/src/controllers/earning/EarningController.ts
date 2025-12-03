@@ -36,6 +36,12 @@ export class EarningController {
     };
 
     static updateEarning = async (req: Request, res: Response) => {
-        req.earning.update(req.body);
+        await req.earning.update(req.body);
+        res.json('Earning updated successfully!');
     };
+
+    static deleteEarning = async (req: Request, res: Response) => {
+        await req.earning.destroy(req.body)
+        res.json('Earning delete successfully!')
+    }
 }
