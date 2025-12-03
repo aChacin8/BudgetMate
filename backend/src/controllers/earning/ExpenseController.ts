@@ -8,11 +8,13 @@ export class ExpenseController {
                 ...req.body,
                 userId: req.user.id
             })
+            if(!expense){
+                return res.status(400).json({ message: 'Failed to create expense' })
+            }
             expense.save()
             res.status(201).json('Expense created successfully')
         } catch (error) {
-            const err = new Error ('Failed to create expense')
-            res.status(500).json({message: err.message})
+            return res.status(500).json({ message: 'Internal Server Error' })
         }
     }
 
@@ -29,8 +31,7 @@ export class ExpenseController {
         }
             res.json(expenses)
         } catch (error) {
-            const err = new Error ('Failed to get expenses')
-            res.status(500).json({message: err.message})
+            return res.status(500).json({ message: 'Internal Server Error' })
         }
     }
 
