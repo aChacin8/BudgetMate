@@ -1,8 +1,6 @@
 import { Table, Model, Column, DataType, HasMany, ForeignKey, BelongsTo } from "sequelize-typescript";
-import EarningExpense from "./EarningExpense";
-import Budget from "../budget/Budget";
+
 import User from "../user/User";
-import ExtraEarnings from "./ExtraEarning";
 
 @Table({
     tableName: 'earnings',
