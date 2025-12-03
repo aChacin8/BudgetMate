@@ -18,7 +18,7 @@ earningRouter.post('',
 
 earningRouter.get('',
     getLimiter,
-    EarningController.getEarning
+    EarningController.getEarnings
 )
 
 earningRouter.patch('/:earningId',
