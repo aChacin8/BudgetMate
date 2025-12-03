@@ -5,18 +5,21 @@ import Earning from "../../models/earning/Earning";
 export class EarningController {
     static createEarning = async (req: Request, res: Response) => {
         try {
-            const earning = await Earning.create(req.body)
+            const earning = await Earning.create({
+                ...req.body,
+                userId: req.user.id
+            })
 
             await earning.save()
-            res.status(201).json('Earning created successfully')
+            res.status(201).json({ message:'Earning created successfully', earning })
         } catch (error) {
             return res.status(500).json({ message: 'Failed to create earning' })
         }
     };
 
-    static getEarning = async (req: Request, res: Response) => {
+    static getEarnings = async (req: Request, res: Response) => {
         try {
-            const earning = await Earning.findOne({
+            const earning = await Earning.findAll({
                 where: {
                     userId: req.user.id
                 }
@@ -34,14 +37,17 @@ export class EarningController {
         const { earningId } = req.params;
 
         try {
-            const { baseAmount, periodType, periodMonth, periodYear } = req.body;
-
-            const earning = await Earning.findByPk(earningId);
+            const earning = await Earning.findOne({
+                where: {
+                    id: earningId,
+                    userId: req.user.id
+                }
+            });
             if (!earning) {
                 return res.status(404).json({ message: "Earning doesn't exist" });
             }
 
-            await earning.update({ baseAmount, periodType,periodMonth, periodYear });
+            await earning.update(req.body);
 
             res.status(200).json({ message: "Earning updated successfully", earning });
         } catch (error) {
