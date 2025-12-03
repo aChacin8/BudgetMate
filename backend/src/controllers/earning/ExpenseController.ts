@@ -12,7 +12,7 @@ export class ExpenseController {
                 return res.status(400).json({ message: 'Failed to create expense' })
             }
             expense.save()
-            res.status(201).json('Expense created successfully')
+            res.status(201).json('Earning Expense created successfully')
         } catch (error) {
             return res.status(500).json({ message: 'Internal Server Error' })
         }
@@ -27,7 +27,7 @@ export class ExpenseController {
                 }
             })
             if (!expenses){
-            return res.status(404).json({message: 'Expenses not found'})
+            return res.status(404).json({message: 'Earning Expenses not found'})
         }
             res.json(expenses)
         } catch (error) {
@@ -41,9 +41,11 @@ export class ExpenseController {
 
     static updateExpense = async (req: Request, res: Response) => {
         await req.expense.update(req.body)
+        res.json('Earning Expense updated successfully!')
     }
 
     static deleteExpense = async (req: Request, res: Response) => {
         await req.expense.destroy(req.body)
+        res.json('Earning Expense delete successfully!')
     }
 }
