@@ -40,6 +40,7 @@ export const validateExtraEarningExists = async (req: Request, res: Response, ne
             return res.status(404).json({ message: 'Extra earning not found' });
         }
         req.extraEarning = extraEarnings;
+        next();
     } catch (error) {
         const err = new Error('Failed to get extra earning by id')
         res.status(500).json({ message: err.message })
