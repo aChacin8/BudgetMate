@@ -15,7 +15,12 @@ export const validateExpenseById = async (req: Request, res: Response, next: Nex
 export const validateExpenseExists = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { expenseId } = req.params
-        const expense = await Expense.findByPk(expenseId)
+        const expense = await Expense.findOne({
+            where: { 
+                id: expenseId,
+                userId: req.user.id
+            }
+        })
         if (!expense) {
             return res.status(404).json({ message: 'Expense not found' })
         }

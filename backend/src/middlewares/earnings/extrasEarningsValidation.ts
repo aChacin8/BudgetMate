@@ -27,9 +27,14 @@ export const validateExtraEarningById = async (req: Request, res: Response, next
 
 export const validateExtraEarningExists = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const { extraEarningId, earningId} = req.params;
+        const { extraEarningId } = req.params;
 
-        const extraEarnings = await ExtraEarnings.findByPk(extraEarningId);
+        const extraEarnings = await ExtraEarnings.findOne({
+            where: {
+                id: extraEarningId,
+                userId: req.user.id
+            }
+        });
 
         if (!extraEarnings){
             return res.status(404).json({ message: 'Extra earning not found' });
