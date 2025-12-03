@@ -34,12 +34,6 @@ export const validateUserInput = async (req: Request, res: Response, next: NextF
         .isNumeric().withMessage('Phone number must contain only numbers')
         .run(req);
 
-    // get validation errors
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
-    }
-
     try {
         const { phone, email } = req.body;
 
@@ -57,7 +51,6 @@ export const validateUserInput = async (req: Request, res: Response, next: NextF
                 return res.status(409).json({ message: 'This email is already used' });
             }
         }
-
     } catch (error) {
         return res.status(500).json({ message: 'Internal Server Error' });
     }
