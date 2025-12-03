@@ -30,6 +30,4 @@ export const validateExpenseExists = async (req: Request, res: Response, next: N
         const err = new Error('Failed to get expense by id')
         res.status(500).json({ message: err.message })
     }
-
-    next();
 }
