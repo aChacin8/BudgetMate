@@ -28,7 +28,7 @@ export const validateEarningInput = async (req: Request, res: Response, next: Ne
     next();
 }
 
-export const validateEarning = async (req: Request, res: Response, next: NextFunction) => {
+export const validateEarningExists = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { earningId } = req.params;
         const earning = await Earning.findOne({
