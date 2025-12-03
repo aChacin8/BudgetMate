@@ -1,5 +1,6 @@
 import { Table, Model,Column, DataType, ForeignKey, BelongsTo} from "sequelize-typescript";
 import Earning from "./Earning";
+import User from "../user/User";
 
 @Table({
     tableName: 'earning_expenses',
@@ -17,12 +18,17 @@ class EarningExpense extends Model {
     })
     declare amount: number
 
-    @ForeignKey(() => Earning)
-    @Column({ field: 'earning_id', type: DataType.INTEGER })
-    declare earningId: number
+    @ForeignKey(() => User)
+    @Column({ 
+        field: 'user_id', 
+        type: DataType.INTEGER, 
+        allowNull: false,
+        unique: true
+    })
+    declare userId: number
 
-    @BelongsTo(()=> Earning)
-    declare earning:Earning
+    @BelongsTo(() => User)
+    declare user: User
 }
 
 

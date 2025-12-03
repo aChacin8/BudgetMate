@@ -1,6 +1,7 @@
 import {Table, Model, DataType,  Column, HasMany, ForeignKey, BelongsTo } from "sequelize-typescript";
 import BudgetExpense from "./BudgetExpense";
 import Earning from "../earning/Earning";
+import User from "../user/User";
 
 @Table({
     tableName: 'budgets',
@@ -40,12 +41,17 @@ class Budget extends Model {
     })
     declare budgetExpenses: BudgetExpense[]
 
-    @ForeignKey(() => Earning)
-    @Column({ field: 'earning_id', type: DataType.INTEGER })
-    declare earningId: number
+    @ForeignKey(() => User)
+    @Column({ 
+        field: 'user_id', 
+        type: DataType.INTEGER, 
+        allowNull: false,
+        unique: true
+    })
+    declare userId: number
 
-    @BelongsTo(()=> Earning)
-    declare earning:Earning
+    @BelongsTo(() => User)
+    declare user: User
 }
 
 export default Budget;

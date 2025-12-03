@@ -50,24 +50,6 @@ class Earning extends Model {
 
     @BelongsTo(() => User)
     declare user: User
-
-    @HasMany(() => Budget, {
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
-    })
-    declare budgets: Budget[]
-
-    @HasMany(() => EarningExpense, {
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
-    })
-    declare earningExpenses: EarningExpense[]
-
-    @HasMany(() => ExtraEarnings, {
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
-    })
-    declare extraEarnings: ExtraEarnings[]
 }
 
 export default Earning;
