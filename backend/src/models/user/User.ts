@@ -2,7 +2,7 @@ import { Table, Model, Column, DataType, HasMany } from "sequelize-typescript";
 import Earning from "../earning/Earning";
 import Budget from "../budget/Budget";
 import EarningExpense from "../earning/EarningExpense";
-import ExtraEarnings from "../earning/ExtraEarning";
+import ExtraEarnings from "../earning/EarningExtra";
 
 @Table({
     tableName: 'users',
