@@ -45,4 +45,9 @@ export class ExtraController {
     static updateExtra = async (req: Request, res: Response) => {
         req.extraEarning.update(req.body);
     }
+
+    static deleteExpense = async (req: Request, res: Response) => {
+        await req.extraEarning.destroy(req.body)
+        res.json('Extra earnig delete successfully!')
+    }
 }
