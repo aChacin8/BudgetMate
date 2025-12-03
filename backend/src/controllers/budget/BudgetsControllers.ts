@@ -5,13 +5,19 @@ import BudgetExpense from "../../models/budget/BudgetExpense";
 export class BudgetController {
     static createbudget = async (req: Request, res: Response)=> {
         try {
-            const budgets = await Budget.create(req.body)
-            budgets.earningId = req.earning.id
+            const budgets = await Budget.create({
+                where: {
+                    ...req.body,
+                    userId: req.user.id
+                }
+            })
+            if(!budgets){
+                return res.status(400).json({ message: 'Failed to create budgets'})
+            }
             await budgets.save()
             res.status(201).json(budgets)    
         } catch (error) {
-            const err = new Error ('Failed to create budgets')
-            res.status(500).json({message: err.message})
+            return res.status(500).json({ message: 'Internal Server Error' })
         }
     }
 
@@ -20,7 +26,7 @@ export class BudgetController {
             const budgets = await Budget.findAll({
                 order: [['amount', 'DESC']],
                 where: {
-                    earningId: req.earning.id
+                    userId: req.user.id
                 }
             })
             if (!budgets){
@@ -28,16 +34,12 @@ export class BudgetController {
         }
             res.json(budgets)
         } catch (error) {
-            const err = new Error ('Failed to get budgets')
-            res.status(500).json({message: err.message})
+            return res.status(500).json({ message: 'Internal Server Error' })
         }
     }
 
     static getBudgetById = async (req: Request, res: Response) => {
-        const budget = await Budget.findByPk(req.budget.id , {
-            include: [BudgetExpense]
-        })
-        res.json(budget)
+        res.json(req.budget);
     }
 
     static updateBudget = async (req: Request, res: Response) => {
@@ -47,6 +49,6 @@ export class BudgetController {
 
     static deleteBudget = async (req: Request, res: Response) => {
         await req.budget.destroy()
-        res.json('Budget deleted')
+        res.json('Budget deleted successfully!')
     }
 } 
