@@ -4,7 +4,10 @@ import EarningExpense from "../../models/earning/EarningExpense";
 export class ExpenseController {
     static createExpense = async (req: Request, res: Response) => {
         try {
-            const expense = await EarningExpense.create(req.body)
+            const expense = await EarningExpense.create({
+                ...req.body,
+                userId: req.user.id
+            })
             expense.save()
             res.status(201).json('Expense created successfully')
         } catch (error) {
@@ -17,6 +20,9 @@ export class ExpenseController {
         try {
             const expenses = await EarningExpense.findAll({
                 order: [['amount', 'DESC']],
+                where: {
+                    userId: req.user.id
+                }
             })
             if (!expenses){
             return res.status(404).json({message: 'Expenses not found'})
