@@ -9,11 +9,13 @@ export class EarningController {
                 ...req.body,
                 userId: req.user.id
             })
-
+            if(!earning){
+                return res.status(400).json({ message: 'Failed to create earning' })
+            }
             await earning.save()
             res.status(201).json({ message:'Earning created successfully', earning })
         } catch (error) {
-            return res.status(500).json({ message: 'Failed to create earning' })
+            return res.status(500).json({ message: 'Internal Server Error' })
         }
     };
 
@@ -34,25 +36,6 @@ export class EarningController {
     };
 
     static updateEarning = async (req: Request, res: Response) => {
-        const { earningId } = req.params;
-
-        try {
-            const earning = await Earning.findOne({
-                where: {
-                    id: earningId,
-                    userId: req.user.id
-                }
-            });
-            if (!earning) {
-                return res.status(404).json({ message: "Earning doesn't exist" });
-            }
-
-            await earning.update(req.body);
-
-            res.status(200).json({ message: "Earning updated successfully", earning });
-        } catch (error) {
-            console.error(error);
-            res.status(500).json({ message: "Internal server error" });
-        }
+        req.earning.update(req.body);
     };
 }
