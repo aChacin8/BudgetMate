@@ -10,6 +10,7 @@ declare global {
     namespace Express {
         interface Request {
             user?: User;
+            foundUser?: User;
             earning?: Earning;
             expense?: Expense;
             budget?: Budget;
