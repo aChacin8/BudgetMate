@@ -37,4 +37,12 @@ export class ExtraController {
             res.status(500).json({message: err.message})
         }
     }
+
+    static getExtraById = async (req: Request, res: Response) => {
+        res.json(req.extraEarning);
+    }
+
+    static updateExtra = async (req: Request, res: Response) => {
+        req.extraEarning.update(req.body);
+    }
 }
