@@ -23,7 +23,6 @@ class EarningExtras extends Model {
         field: 'user_id', 
         type: DataType.INTEGER, 
         allowNull: false,
-        unique: true
     })
     declare userId: number
 
