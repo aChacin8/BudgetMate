@@ -27,7 +27,12 @@ export const validateBudgetById = async (req: Request, res: Response, next: Next
 export const validateBudgetExists = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { budgetId } = req.params
-        const budget = await Budget.findByPk(budgetId)
+        const budget = await Budget.findOne({
+            where: {
+                id: budgetId,
+                userId: req.user.id
+            }
+        })
         if (!budget) {
             return res.status(404).json({ message: 'Budget not found' })
         }
@@ -37,6 +42,4 @@ export const validateBudgetExists = async (req: Request, res: Response, next: Ne
         const err = new Error('Failed to get budget by id')
         res.status(500).json({ message: err.message })
     }
-
-    next();
 }

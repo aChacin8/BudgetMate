@@ -27,15 +27,15 @@ export const validateBudgetExpenseById = async (req: Request, res: Response, nex
 
 export const validateBudgetExpenseExists = async (req: Request,res: Response,next: NextFunction) => {
     try {
-        const { budgetExpenseId, budgetId } = req.params;
+        const { budgetExpenseId } = req.params;
 
         const budgetExpense = await BudgetExpense.findOne({
             where: {
                 id: budgetExpenseId,
-                budgetId: budgetId
+                budgetId: req.budget.id,
+                userId: req.user.id
             }
         });
-
         if (!budgetExpense) {
             return res.status(404).json({ message: 'Expense not found for this budget' });
         }
