@@ -3,11 +3,11 @@ import Earning from "./Earning";
 import User from "../user/User";
 
 @Table({
-    tableName: 'extra_earnings',
+    tableName: 'earning_extras',
     underscored: true
 })
 
-class ExtraEarnings extends Model {
+class EarningExtras extends Model {
     @Column({
         type: DataType.STRING(100)
     })
@@ -31,4 +31,4 @@ class ExtraEarnings extends Model {
     declare user: User
 }
 
-export default ExtraEarnings;
+export default EarningExtras;

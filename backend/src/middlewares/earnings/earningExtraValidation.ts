@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { param, body } from "express-validator";
 
-import ExtraEarnings from "../../models/earning/ExtraEarning";
+import EarningExtras from "../../models/earning/EarningExtra";
 
 export const validateExtraInput = async (req: Request, res: Response, next: NextFunction) => {
     await body('source')
@@ -29,7 +29,7 @@ export const validateExtraEarningExists = async (req: Request, res: Response, ne
     try {
         const { extraEarningId } = req.params;
 
-        const extraEarnings = await ExtraEarnings.findOne({
+        const extraEarnings = await EarningExtras.findOne({
             where: {
                 id: extraEarningId,
                 userId: req.user.id
