@@ -77,9 +77,9 @@ class User extends Model {
     })
     declare earnings: Earning[]
 
-        @HasMany(() => Budget, {
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
+    @HasMany(() => Budget, {
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE'
     })
     declare budgets: Budget[]
 
