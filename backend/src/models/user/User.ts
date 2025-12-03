@@ -1,5 +1,8 @@
 import { Table, Model, Column, DataType, HasMany } from "sequelize-typescript";
 import Earning from "../earning/Earning";
+import Budget from "../budget/Budget";
+import EarningExpense from "../earning/EarningExpense";
+import ExtraEarnings from "../earning/ExtraEarning";
 
 @Table({
     tableName: 'users',
@@ -73,6 +76,24 @@ class User extends Model {
         onDelete: 'CASCADE'
     })
     declare earnings: Earning[]
+
+        @HasMany(() => Budget, {
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+    })
+    declare budgets: Budget[]
+
+    @HasMany(() => EarningExpense, {
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+    })
+    declare earningExpenses: EarningExpense[]
+
+    @HasMany(() => ExtraEarnings, {
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+    })
+    declare extraEarnings: ExtraEarnings[]
 }
 
 export default User;
