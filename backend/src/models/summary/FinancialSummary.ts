@@ -1,9 +1,9 @@
 import { Table, Model, Column, DataType, ForeignKey, BelongsTo } from "sequelize-typescript";
 import User from "../user/User";
 
-@Table({ tableName: "month_summaries", underscored: true })
+@Table({ tableName: "financial_summaries", underscored: true })
 
-class MonthSummary extends Model {
+class FinancialSummary extends Model {
     @Column({ 
         type: DataType.INTEGER, 
         allowNull: false 
@@ -47,4 +47,4 @@ class MonthSummary extends Model {
     declare user: User;
 }
 
-export default MonthSummary;
+export default FinancialSummary;
