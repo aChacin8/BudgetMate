@@ -25,7 +25,7 @@ export const authValidation = async (req: Request, res: Response, next: NextFunc
         }
 
         const user = await User.findByPk(result.id, {
-            attributes: ['id', 'firstName', 'lastName', 'email', 'nonce', 'emailHash', 'isConfirmed', 'createdAt', 'updatedAt']
+            attributes: ['id', 'firstName', 'lastName', 'email', 'isConfirmed', 'isPremium', 'createdAt', 'updatedAt']
         });
 
         if (!user) {
