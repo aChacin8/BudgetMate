@@ -10,6 +10,7 @@ import expenseRouter from './routes/expensesRoute'
 import { authRouter } from './routes/authRoute'
 import { globalLimiter } from './config/limiter'
 import { earningRouter } from './routes/earningRoute'
+import { SecureData } from './utils/crypto'
 
 const connectDB = async () => {
     try {
@@ -29,6 +30,7 @@ const app = express();
     async () => {
         try {
             await CryptoEmail.init();
+            await SecureData.init(process.env.SECURE_DATA_KEY);
             console.log(colors.bgGreen('Crypto system initialized'));
         } catch (error) {
             console.error(colors.bgRed('Failed to initialize crypto system'));
