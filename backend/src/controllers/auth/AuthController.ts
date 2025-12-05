@@ -6,10 +6,11 @@ import { CryptoEmail } from "../../utils/cryptoEmail";
 import { generateToken } from "../../utils/token";
 import { AuthEmail } from "../../emails/AuthEmail";
 import { generateJWT } from "../../utils/jwt";
+import { SecureData } from "../../utils/crypto";
 
 export class AuthController {
     static createUser = async (req: Request, res: Response) => {
-        const { email, password, token, ...rest } = req.body;
+        const { email, password, token, phone, ...rest } = req.body;
 
         try {
             const emailHash = await CryptoEmail.hashEmail(email);
@@ -18,14 +19,16 @@ export class AuthController {
             if (userExists) {
                 return res.status(409).json({ message: 'User already exists' });
             }
-
+            
             const { encrypted, nonce } = CryptoEmail.encryptEmail(email);
+            const encryptePhone = SecureData.encrypt(phone);
 
             const user = await User.create({
                 ...rest,
                 email: encrypted,
                 nonce,
                 emailHash,
+                phone: encryptePhone,
                 password: await hashPassword(password),
                 token: generateToken()
             })
@@ -67,7 +70,7 @@ export class AuthController {
             }
 
             const jwt = generateJWT(user.id);
-
+            const { decrypt } = SecureData;
             return res.status(200).json({
                 message: 'Login successful',
                 jwt
