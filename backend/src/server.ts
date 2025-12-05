@@ -45,9 +45,13 @@ app.use(express.json())
 
 app.use(globalLimiter)
 
-app.use('/api/earnings', earningRouter)
-app.use('/api/budgets', budgetRouter)
-app.use('/api/expenses', expenseRouter)
 app.use('/api/auth', authRouter)
+
+app.use('/api/users/:userId/earnings', earningRouter)
+app.use('/api/users/:userId/earnings/:earningId/expenses', expenseRouter)
+// app.use('/api/users/:userId/earnings/:earningId/extras', extrasRouter);
+app.use('/api/users/:userId/earnings/:earningId/budgets', budgetRouter)
+// app.use('/api/users/:userId/earnings/:earningId/budgets/:budgetId/expenses', budgetExpenseRouter);
+
 
 export default app
