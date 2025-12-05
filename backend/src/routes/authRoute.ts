@@ -30,6 +30,13 @@ authRouter.post('/login',
     AuthController.loginUser
 )
 
+authRouter.get('/user',
+    getLimiter,
+    authValidation,
+    handleInputErrors,
+    AuthController.user
+)
+
 authRouter.post('/forgot-password',
     postLimiter,
     forgotPasswordValidation,
@@ -42,14 +49,7 @@ authRouter.post('/reset-password/:token',
     resetPasswordValidation,
     handleInputErrors,
     AuthController.resetPassword
-)
-
-authRouter.get('/user',
-    getLimiter,
-    authValidation,
-    handleInputErrors,
-    AuthController.user
-)
+)   
 
 authRouter.post('/update-password',
     postLimiter,
