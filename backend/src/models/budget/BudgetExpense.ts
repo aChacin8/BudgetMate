@@ -19,15 +19,24 @@ class BudgetExpense extends Model {
     declare amount: number
     
     @ForeignKey(()=> Budget)
-    @Column({ field: 'budget_id', type: DataType.INTEGER })
+    @Column({ 
+        field: 'budget_id', 
+        type: DataType.INTEGER 
+    })
     declare budgetId: number
-
-    @ForeignKey(() => User)
-    @Column({ field: "user_id", type: DataType.INTEGER })
-    userId: number;
 
     @BelongsTo(()=> Budget )
     declare budget: Budget
+
+    @ForeignKey(() => User)
+    @Column({ 
+        field: "user_id", 
+        type: DataType.INTEGER 
+    })
+    userId: number;
+
+    @BelongsTo(()=> User )
+    declare user: User
 }
 
 export default BudgetExpense
