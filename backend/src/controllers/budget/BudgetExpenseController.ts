@@ -22,8 +22,8 @@ export class BudgetExpenseController {
         try {
             const budgetExpenses = await BudgetExpense.findAll({
                 where: {
-                    budgetId: req.budget.id,
-                    userId: req.user.id
+                    userId: req.user.id,
+                    budgetId: req.budget.id
                 }
             })
             if(!budgetExpenses){
