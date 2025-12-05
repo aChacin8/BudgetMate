@@ -35,6 +35,10 @@ export class EarningController {
         }
     };
 
+    static getEarningById = async (req: Request, res: Response) => {
+        res.json(req.earning);
+    }
+
     static updateEarning = async (req: Request, res: Response) => {
         await req.earning.update(req.body);
         res.json('Earning updated successfully!');

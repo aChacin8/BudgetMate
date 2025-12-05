@@ -22,6 +22,12 @@ earningRouter.get('',
     EarningController.getEarnings
 )
 
+earningRouter.get('/:earningId', 
+    getLimiter,
+    handleInputErrors,
+    EarningController.getEarningById
+)
+
 earningRouter.patch('/:earningId',
     postLimiter,
     validateEarningInput,
