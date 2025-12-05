@@ -28,6 +28,17 @@ class EarningExtras extends Model {
 
     @BelongsTo(() => User)
     declare user: User
+
+    @ForeignKey(() => Earning)
+    @Column({
+        field: 'earning_id',
+        type: DataType.INTEGER,
+        allowNull: false,
+    })
+    declare earningId: number
+    
+    @BelongsTo(()=> Earning)
+    declare earning: Earning
 }
 
 export default EarningExtras;
