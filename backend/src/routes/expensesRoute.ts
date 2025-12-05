@@ -4,11 +4,14 @@ import { validateExpenseInput } from "../middlewares/budget/budgetExpenseValidat
 import { handleInputErrors } from "../middlewares/hadleInputErrors";
 import { validateExpenseById, validateExpenseExists } from "../middlewares/earnings/earningExpenseValidation";
 import { deleteLimiter, getLimiter, postLimiter } from "../config/limiter";
+import { authValidation } from "../middlewares/auth/authValidation";
 
 const expenseRouter = express.Router();
 
 expenseRouter.param('expenseId', validateExpenseById)
 expenseRouter.param('expenseId', validateExpenseExists)
+
+expenseRouter.use(authValidation);
 
 expenseRouter.post('',
     postLimiter,
@@ -34,6 +37,7 @@ expenseRouter.patch('/:expenseId',
 expenseRouter.delete('/:expenseId',
     deleteLimiter,
     handleInputErrors, 
-    ExpenseController.deleteExpense)
+    ExpenseController.deleteExpense
+);
 
 export default expenseRouter;
