@@ -1,20 +1,7 @@
 import { Request, Response, NextFunction } from "express";
-import { param, body } from "express-validator";
+import { param } from "express-validator";
 
 import BudgetExpense from "../../models/budget/BudgetExpense";
-
-export const validateExpenseInput = async (req: Request, res: Response, next: NextFunction) => {
-    await body('name')
-        .notEmpty().withMessage('Name is required')
-        .run(req)
-    await body('amount')
-        .notEmpty().withMessage('Amount is required')
-        .isNumeric().withMessage('Amount must be a number')
-        .custom((value) => value > 0).withMessage('Amount must be greater than 0')
-        .run(req)
-
-    next();
-}
 
 export const validateBudgetExpenseById = async (req: Request, res: Response, next: NextFunction) => {
     await param('budgetExpenseId')
