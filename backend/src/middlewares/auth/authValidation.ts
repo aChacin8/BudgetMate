@@ -4,6 +4,7 @@ import { body, param } from 'express-validator';
 import { verifyJWT } from '../../utils/jwt';
 import User from '../../models/user/User';
 import { CryptoEmail } from '../../utils/cryptoEmail';
+import { SecureData } from '../../utils/crypto';
 
 export const authValidation = async (req: Request, res: Response, next: NextFunction) => {
     const bearer = req.headers.authorization;
@@ -25,7 +26,7 @@ export const authValidation = async (req: Request, res: Response, next: NextFunc
         }
 
         const user = await User.findByPk(result.id, {
-            attributes: ['id', 'firstName', 'lastName', 'email', 'isConfirmed', 'isPremium', 'createdAt', 'updatedAt']
+            attributes: ['id', 'firstName', 'lastName', 'email', 'emailHash', 'nonce', 'phone', 'isConfirmed', 'isPremium', 'createdAt', 'updatedAt']
         });
 
         if (!user) {
@@ -33,7 +34,9 @@ export const authValidation = async (req: Request, res: Response, next: NextFunc
         }
 
         const decryptedEmail = CryptoEmail.decryptEmail(user.email, user.nonce);
+        const decryptedPhone = SecureData.decrypt(user.phone)
         user.email = decryptedEmail;
+        user.phone = decryptedPhone;
         req.user = user;
 
         next();
