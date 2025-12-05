@@ -32,7 +32,8 @@ export const validateExtraEarningExists = async (req: Request, res: Response, ne
         const extraEarnings = await EarningExtras.findOne({
             where: {
                 id: extraEarningId,
-                userId: req.user.id
+                userId: req.user.id,
+                earningId: req.earning.id
             }
         });
 

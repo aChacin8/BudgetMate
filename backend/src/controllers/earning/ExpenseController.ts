@@ -6,7 +6,8 @@ export class ExpenseController {
         try {
             const expense = await EarningExpense.create({
                 ...req.body,
-                userId: req.user.id
+                userId: req.user.id,
+                earningId: req.earning.id
             })
             if(!expense){
                 return res.status(400).json({ message: 'Failed to create expense' })
@@ -23,7 +24,8 @@ export class ExpenseController {
             const expenses = await EarningExpense.findAll({
                 order: [['amount', 'DESC']],
                 where: {
-                    userId: req.user.id
+                    userId: req.user.id,
+                    earningId: req.earning.id
                 }
             })
             if (!expenses){

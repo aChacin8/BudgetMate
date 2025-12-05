@@ -8,7 +8,8 @@ export class BudgetController {
             const budgets = await Budget.create({
                 where: {
                     ...req.body,
-                    userId: req.user.id
+                    userId: req.user.id,
+                    earningId: req.earning.id
                 }
             })
             if(!budgets){
@@ -26,7 +27,8 @@ export class BudgetController {
             const budgets = await Budget.findAll({
                 order: [['amount', 'DESC']],
                 where: {
-                    userId: req.user.id
+                    userId: req.user.id,
+                    earningId: req.earning.id
                 }
             })
             if (!budgets){

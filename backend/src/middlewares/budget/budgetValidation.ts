@@ -30,7 +30,8 @@ export const validateBudgetExists = async (req: Request, res: Response, next: Ne
         const budget = await Budget.findOne({
             where: {
                 id: budgetId,
-                userId: req.user.id
+                userId: req.user.id,
+                earningId: req.earning.id
             }
         })
         if (!budget) {

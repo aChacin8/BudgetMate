@@ -6,7 +6,8 @@ export class ExtraController {
         try {
             const extras = await EarningExtras.create({
                 ...req.body,
-                userId: req.user.id
+                userId: req.user.id,
+                earningId: req.earning.id
             })
 
             if(!extras){
@@ -25,7 +26,8 @@ export class ExtraController {
             const extras = await EarningExtras.findAll({
                 order: [['amount', 'DESC']],
                 where: {
-                    userId: req.user.id
+                    userId: req.user.id,
+                    earningId: req.earning.id
                 }
             })
             if (!extras){

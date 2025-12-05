@@ -18,7 +18,8 @@ export const validateExpenseExists = async (req: Request, res: Response, next: N
         const expense = await Expense.findOne({
             where: { 
                 id: expenseId,
-                userId: req.user.id
+                userId: req.user.id,
+                earningId: req.earning.id
             }
         })
         if (!expense) {
