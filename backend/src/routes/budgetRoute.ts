@@ -5,9 +5,10 @@ import { BudgetExpenseController } from '../controllers/budget/BudgetExpenseCont
 
 import { handleInputErrors } from '../middlewares/hadleInputErrors';
 import { validateBudgetInput, validateBudgetById, validateBudgetExists } from '../middlewares/budget/budgetValidation';
-import { validateBudgetExpenseById, validateBudgetExpenseExists, validateExpenseInput } from '../middlewares/budget/budgetExpenseValidation';
+import { validateBudgetExpenseById, validateBudgetExpenseExists} from '../middlewares/budget/budgetExpenseValidation';
 import { deleteLimiter, getLimiter, postLimiter } from '../config/limiter';
 import { authValidation } from '../middlewares/auth/authValidation';
+import { validateExpenseInput } from '../middlewares/earnings/earningExpenseValidation';
 
 export const budgetRouter = express.Router();
 
