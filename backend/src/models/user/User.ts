@@ -23,32 +23,32 @@ class User extends Model {
     declare lastName: string
 
     @Column({
-        type: DataType.STRING(100),
+        type: DataType.STRING(150),
         allowNull: false,
         unique: true
     })
     declare email: string
 
     @Column({
-        type: DataType.STRING,
+        type: DataType.STRING(100),
         allowNull: false
     })
     declare nonce: string
 
     @Column({
-        type: DataType.STRING(100),
+        type: DataType.STRING(150),
         unique: true
     })
     declare emailHash: string
 
     @Column({
-        type: DataType.STRING,
+        type: DataType.STRING(150),
         allowNull: false
     })
     declare password: string
 
     @Column({
-        type: DataType.STRING(20),
+        type: DataType.STRING(150),
         allowNull: true,
         unique: true
     })
