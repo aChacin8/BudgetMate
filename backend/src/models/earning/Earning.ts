@@ -23,19 +23,20 @@ class Earning extends Model {
         type: DataType.INTEGER, 
         allowNull: false 
     })
-    declare periodMonth: number;
+    declare periodMonth: number; //It represents the month number (1-12)
 
     @Column({ 
         type: DataType.INTEGER, 
         allowNull: false 
     })
-    declare periodYear: number;
+    declare periodYear: number; //It represents the year (e.g., 2025)
 
     @Column({ 
         type: DataType.INTEGER, 
-        allowNull: true 
+        allowNull: false,
+        defaultValue: 1
     })
-    declare periodNumber: number | null; // 1 o 2 si es quincenal
+    declare periodNumber: number | null; //It represents the number of the period within the month (1 or 2 for biweekly, always 1 for monthly)
 
     @ForeignKey(() => User)
     @Column({ 
