@@ -6,11 +6,9 @@ export class BudgetController {
     static createbudget = async (req: Request, res: Response)=> {
         try {
             const budgets = await Budget.create({
-                where: {
-                    ...req.body,
-                    userId: req.user.id,
-                    earningId: req.earning.id
-                }
+                ...req.body,
+                userId: req.user.id,
+                earningId: req.earning.id
             })
             if(!budgets){
                 return res.status(400).json({ message: 'Failed to create budgets'})

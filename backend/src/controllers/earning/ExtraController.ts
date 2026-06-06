@@ -45,11 +45,12 @@ export class ExtraController {
     }
 
     static updateExtra = async (req: Request, res: Response) => {
-        req.extraEarning.update(req.body);
+        await req.extraEarning.update(req.body);
+        res.json('Extra earning updated successfully!')
     }
 
-    static deleteExpense = async (req: Request, res: Response) => {
-        await req.extraEarning.destroy(req.body)
-        res.json('Extra earnig delete successfully!')
+    static deleteExtra = async (req: Request, res: Response) => {
+        await req.extraEarning.destroy()
+        res.json('Extra earning deleted successfully!')
     }
 }

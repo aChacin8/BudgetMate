@@ -1,6 +1,7 @@
 import express from 'express'
 import morgan from 'morgan'
 import colors from 'colors'
+import cors from 'cors'
 
 import './interface'
 import { db } from './config/db'
@@ -11,6 +12,8 @@ import { authRouter } from './routes/authRoute'
 import { globalLimiter } from './config/limiter'
 import { earningRouter } from './routes/earningRoute'
 import { SecureData } from './utils/crypto'
+import extrasRouter from './routes/extrasRoute'
+import summaryRouter from './routes/summaryRoute'
 
 const connectDB = async () => {
     try {
@@ -40,6 +43,10 @@ const app = express();
 )();
 
 connectDB()
+app.use(cors({
+    origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+    credentials: true
+}))
 app.use(morgan('dev'))
 app.use(express.json())
 
@@ -49,9 +56,9 @@ app.use('/api/auth', authRouter)
 
 app.use('/api/users/:userId/earnings', earningRouter)
 app.use('/api/users/:userId/earnings/:earningId/expenses', expenseRouter)
-// app.use('/api/users/:userId/earnings/:earningId/extras', extrasRouter);
+app.use('/api/users/:userId/earnings/:earningId/extras', extrasRouter)
 app.use('/api/users/:userId/earnings/:earningId/budgets', budgetRouter)
-// app.use('/api/users/:userId/earnings/:earningId/budgets/:budgetId/expenses', budgetExpenseRouter);
+app.use('/api/users/:userId/summary', summaryRouter)
 
 
 export default app

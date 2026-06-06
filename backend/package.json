@@ -13,10 +13,12 @@
   "author": "Chacin Nava Alejandro Andres",
   "license": "ISC",
   "dependencies": {
+    "@types/cors": "^2.8.19",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/libsodium-wrappers": "^0.7.14",
     "bcrypt": "^6.0.0",
     "colors": "^1.4.0",
+    "cors": "^2.8.6",
     "dotenv": "^17.2.2",
     "express": "^5.1.0",
     "express-rate-limit": "^8.2.1",

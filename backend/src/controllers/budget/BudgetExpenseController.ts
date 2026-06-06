@@ -29,6 +29,7 @@ export class BudgetExpenseController {
             if(!budgetExpenses){
                 return res.status(404).json({ message: 'Budget Expenses not found' })
             }
+            res.json(budgetExpenses)
         } catch (error) {
             return res.status(500).json({ message: 'Internal Server Error' })
         }

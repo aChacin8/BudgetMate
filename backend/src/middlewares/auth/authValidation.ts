@@ -34,9 +34,8 @@ export const authValidation = async (req: Request, res: Response, next: NextFunc
         }
 
         const decryptedEmail = CryptoEmail.decryptEmail(user.email, user.nonce);
-        const decryptedPhone = SecureData.decrypt(user.phone)
         user.email = decryptedEmail;
-        user.phone = decryptedPhone;
+        user.phone = user.phone ? SecureData.decrypt(user.phone) : null;
         req.user = user;
 
         next();

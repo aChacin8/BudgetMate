@@ -9,10 +9,12 @@ import { validateBudgetExpenseById, validateBudgetExpenseExists} from '../middle
 import { deleteLimiter, getLimiter, postLimiter } from '../config/limiter';
 import { authValidation } from '../middlewares/auth/authValidation';
 import { validateExpenseInput } from '../middlewares/earnings/earningExpenseValidation';
+import { validateEarningExists } from '../middlewares/earnings/earningValidation';
 
-export const budgetRouter = express.Router();
+export const budgetRouter = express.Router({ mergeParams: true });
 
 budgetRouter.use(authValidation);
+budgetRouter.use(validateEarningExists);
 
 budgetRouter.param('budgetId', validateBudgetById)
 budgetRouter.param('budgetId', validateBudgetExists)

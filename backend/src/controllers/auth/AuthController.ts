@@ -21,14 +21,14 @@ export class AuthController {
             }
             
             const { encrypted, nonce } = CryptoEmail.encryptEmail(email);
-            const encryptePhone = SecureData.encrypt(phone);
+            const encryptedPhone = phone ? SecureData.encrypt(phone) : null;
 
             const user = await User.create({
                 ...rest,
                 email: encrypted,
                 nonce,
                 emailHash,
-                phone: encryptePhone,
+                phone: encryptedPhone,
                 password: await hashPassword(password),
                 token: generateToken()
             })
