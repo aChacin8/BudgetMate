@@ -14,6 +14,7 @@ import { earningRouter } from './routes/earningRoute'
 import { SecureData } from './utils/crypto'
 import extrasRouter from './routes/extrasRoute'
 import summaryRouter from './routes/summaryRoute'
+import statsRouter from './routes/statsRoute'
 
 const connectDB = async () => {
     try {
@@ -59,6 +60,7 @@ app.use('/api/users/:userId/earnings/:earningId/expenses', expenseRouter)
 app.use('/api/users/:userId/earnings/:earningId/extras', extrasRouter)
 app.use('/api/users/:userId/earnings/:earningId/budgets', budgetRouter)
 app.use('/api/users/:userId/summary', summaryRouter)
+app.use('/api/users/:userId/stats', statsRouter)
 
 
 export default app
