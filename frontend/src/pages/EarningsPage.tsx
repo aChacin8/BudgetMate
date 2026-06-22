@@ -48,8 +48,12 @@ export default function EarningsPage() {
 
   const handleDelete = async (id: number) => {
     if (!confirm('¿Eliminar este ingreso y todos sus gastos?')) return
-    await earningsApi.delete(userId, id)
-    setEarnings(prev => prev.filter(e => e.id !== id))
+    try {
+      await earningsApi.delete(userId, id)
+      setEarnings(prev => prev.filter(e => e.id !== id))
+    } catch {
+      setError('No se pudo eliminar el ingreso. Intenta de nuevo.')
+    }
   }
 
   const f = (k: keyof EarningPayload) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>

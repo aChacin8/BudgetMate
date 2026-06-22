@@ -8,6 +8,7 @@ import ConfirmAccountPage from './pages/ConfirmAccountPage'
 import DashboardPage from './pages/DashboardPage'
 import EarningsPage from './pages/EarningsPage'
 import EarningDetailPage from './pages/EarningDetailPage'
+import StatisticsPage from './pages/StatisticsPage'
 
 export default function App() {
   return (
@@ -22,6 +23,7 @@ export default function App() {
             <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
             <Route path="/earnings" element={<ProtectedRoute><EarningsPage /></ProtectedRoute>} />
             <Route path="/earnings/:earningId" element={<ProtectedRoute><EarningDetailPage /></ProtectedRoute>} />
+            <Route path="/statistics" element={<ProtectedRoute><StatisticsPage /></ProtectedRoute>} />
 
             <Route path="/" element={<Navigate to="/dashboard" replace />} />
             <Route path="*" element={<Navigate to="/dashboard" replace />} />
