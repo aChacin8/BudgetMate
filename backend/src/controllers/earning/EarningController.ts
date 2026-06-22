@@ -1,6 +1,9 @@
 import { Request, Response } from "express";
 
 import Earning from "../../models/earning/Earning";
+import EarningExpense from "../../models/earning/EarningExpense";
+import EarningExtras from "../../models/earning/EarningExtra";
+import Budget from "../../models/budget/Budget";
 
 export class EarningController {
     static createEarning = async (req: Request, res: Response) => {
@@ -45,7 +48,15 @@ export class EarningController {
     };
 
     static deleteEarning = async (req: Request, res: Response) => {
-        await req.earning.destroy(req.body)
-        res.json('Earning delete successfully!')
+        try {
+            const earningId = req.earning.id;
+            await EarningExpense.destroy({ where: { earningId } });
+            await EarningExtras.destroy({ where: { earningId } });
+            await Budget.destroy({ where: { earningId } });
+            await req.earning.destroy();
+            res.json('Earning deleted successfully!');
+        } catch (error) {
+            return res.status(500).json({ message: 'Internal Server Error' });
+        }
     }
 }
