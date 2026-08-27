@@ -1,9 +1,8 @@
 import User from "../models/user/User";
-import BudgetExpense from "../models/budget/BudgetExpense";
-import Budget from "../models/budget/Budget";
-import Expense from "../models/earning/EarningExpense";
-import EarningExtras from "../models/earning/EarningExtra";
-import Earning from "../models/earning/Earning";
+import Category from "../models/category/Category";
+import Supplier from "../models/supplier/Supplier";
+import Product from "../models/product/Product";
+import StockMovement from "../models/movement/StockMovement";
 
 
 declare global {
@@ -11,11 +10,11 @@ declare global {
         interface Request {
             user?: User;
             foundUser?: User;
-            earning?: Earning;
-            expense?: Expense;
-            budget?: Budget;
-            budgetExpense?: BudgetExpense;
-            extraEarning?: EarningExtras;
+            category?: Category;
+            supplier?: Supplier;
+            product?: Product;
+            stockMovement?: StockMovement;
         }
     }
 }
+

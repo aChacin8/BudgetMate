@@ -1,13 +1,13 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-import { AuthProvider } from './utils/AuthContext'
-import { ThemeProvider } from './utils/ThemeContext'
-import ProtectedRoute from './components/ProtectedRoute'
-import LoginPage from './pages/LoginPage'
-import RegisterPage from './pages/RegisterPage'
-import ConfirmAccountPage from './pages/ConfirmAccountPage'
-import DashboardPage from './pages/DashboardPage'
-import EarningsPage from './pages/EarningsPage'
-import EarningDetailPage from './pages/EarningDetailPage'
+import { AuthProvider } from './utils/AuthContext.tsx'
+import { ThemeProvider } from './utils/ThemeContext.tsx'
+import ProtectedRoute from './components/ProtectedRoute.tsx'
+import LoginPage from './pages/LoginPage.tsx'
+import RegisterPage from './pages/RegisterPage.tsx'
+import ConfirmAccountPage from './pages/ConfirmAccountPage.tsx'
+import DashboardPage from './pages/DashboardPage.tsx'
+import ProductsPage from './pages/ProductsPage.tsx'
+import ProductDetailPage from './pages/ProductDetailPage.tsx'
 
 export default function App() {
   return (
@@ -20,8 +20,8 @@ export default function App() {
             <Route path="/confirm-account" element={<ConfirmAccountPage />} />
 
             <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
-            <Route path="/earnings" element={<ProtectedRoute><EarningsPage /></ProtectedRoute>} />
-            <Route path="/earnings/:earningId" element={<ProtectedRoute><EarningDetailPage /></ProtectedRoute>} />
+            <Route path="/products" element={<ProtectedRoute><ProductsPage /></ProtectedRoute>} />
+            <Route path="/products/:productId" element={<ProtectedRoute><ProductDetailPage /></ProtectedRoute>} />
 
             <Route path="/" element={<Navigate to="/dashboard" replace />} />
             <Route path="*" element={<Navigate to="/dashboard" replace />} />

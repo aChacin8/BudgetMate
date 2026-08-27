@@ -6,14 +6,13 @@ import cors from 'cors'
 import './interface'
 import { db } from './config/db'
 import { CryptoEmail } from './utils/cryptoEmail'
-import { budgetRouter } from './routes/budgetRoute'
-import expenseRouter from './routes/expensesRoute'
 import { authRouter } from './routes/authRoute'
 import { globalLimiter } from './config/limiter'
-import { earningRouter } from './routes/earningRoute'
 import { SecureData } from './utils/crypto'
-import extrasRouter from './routes/extrasRoute'
-import summaryRouter from './routes/summaryRoute'
+import { productRouter } from './routes/productRoute'
+import { categoryRouter } from './routes/categoryRoute'
+import { supplierRouter } from './routes/supplierRoute'
+import { movementRouter } from './routes/movementRoute'
 
 const connectDB = async () => {
     try {
@@ -32,6 +31,9 @@ const app = express();
 (
     async () => {
         try {
+            if (!process.env.SECURE_DATA_KEY) {
+                throw new Error('SECURE_DATA_KEY is not defined in .env');
+            }
             await CryptoEmail.init();
             await SecureData.init(process.env.SECURE_DATA_KEY);
             console.log(colors.bgGreen('Crypto system initialized'));
@@ -53,12 +55,9 @@ app.use(express.json())
 app.use(globalLimiter)
 
 app.use('/api/auth', authRouter)
-
-app.use('/api/users/:userId/earnings', earningRouter)
-app.use('/api/users/:userId/earnings/:earningId/expenses', expenseRouter)
-app.use('/api/users/:userId/earnings/:earningId/extras', extrasRouter)
-app.use('/api/users/:userId/earnings/:earningId/budgets', budgetRouter)
-app.use('/api/users/:userId/summary', summaryRouter)
-
+app.use('/api/products', productRouter)
+app.use('/api/categories', categoryRouter)
+app.use('/api/suppliers', supplierRouter)
+app.use('/api/movements', movementRouter)
 
 export default app

@@ -1,4 +1,5 @@
-import { useState, FormEvent } from 'react'
+import { useState } from 'react'
+import type { FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { authApi } from '../apis/auth.api'
 import { useAuth } from '../utils/AuthContext'
@@ -18,7 +19,13 @@ export default function LoginPage() {
       await login(res.data.jwt)
       navigate('/dashboard')
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Error al iniciar sesión')
+      const status = err.response?.status
+      const message = err.response?.data?.message || ''
+      if (status === 403 && message === 'Account not confirmed') {
+        navigate('/confirm-account', { state: { fromLogin: true, email: form.email } })
+        return
+      }
+      setError(message || 'Error al iniciar sesión')
     } finally {
       setLoading(false)
     }
@@ -28,9 +35,9 @@ export default function LoginPage() {
     <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-blue-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-900 flex items-center justify-center p-4 transition-colors">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <span className="text-5xl">💰</span>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mt-3">BudgetMate</h1>
-          <p className="text-gray-500 dark:text-gray-400 mt-1">Controla tus finanzas personales</p>
+          <span className="text-5xl">📦</span>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mt-3">MiniGestor</h1>
+          <p className="text-gray-500 dark:text-gray-400 mt-1">Controla tu inventario en tiempo real</p>
         </div>
 
         <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-lg border border-gray-100 dark:border-gray-700 p-8 transition-colors">

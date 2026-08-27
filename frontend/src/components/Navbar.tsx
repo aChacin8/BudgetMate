@@ -13,12 +13,12 @@ export default function Navbar() {
     <nav className="bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-700 shadow-sm sticky top-0 z-50 transition-colors">
       <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
         <Link to="/dashboard" className="flex items-center gap-2 font-bold text-xl text-emerald-600">
-          <span className="text-2xl"></span> BudgetMate
+          <span className="text-2xl">📦</span> MiniGestor
         </Link>
 
         <div className="hidden md:flex items-center gap-6 text-sm font-medium text-gray-600 dark:text-gray-300">
           <Link to="/dashboard" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Dashboard</Link>
-          <Link to="/earnings" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Ingresos</Link>
+          <Link to="/products" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Inventario</Link>
         </div>
 
         <div className="flex items-center gap-3">

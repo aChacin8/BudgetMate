@@ -1,8 +1,8 @@
 import { Table, Model, Column, DataType, HasMany } from "sequelize-typescript";
-import Earning from "../earning/Earning";
-import Budget from "../budget/Budget";
-import EarningExpense from "../earning/EarningExpense";
-import EarningExtras from "../earning/EarningExtra";
+import Product from "../product/Product";
+import Category from "../category/Category";
+import Supplier from "../supplier/Supplier";
+import StockMovement from "../movement/StockMovement";
 
 @Table({
     tableName: 'users',
@@ -48,7 +48,7 @@ class User extends Model {
     declare password: string
 
     @Column({
-        type: DataType.STRING(150),
+        type: DataType.TEXT,
         allowNull: true,
         unique: true
     })
@@ -71,29 +71,29 @@ class User extends Model {
     })
     declare isPremium: boolean
 
-    @HasMany(() => Earning, {
+    @HasMany(() => Product, {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
     })
-    declare earnings: Earning[]
+    declare products: Product[]
 
-    @HasMany(() => Budget, {
-    onUpdate: 'CASCADE',
-    onDelete: 'CASCADE'
-    })
-    declare budgets: Budget[]
-
-    @HasMany(() => EarningExpense, {
+    @HasMany(() => Category, {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
     })
-    declare earningExpenses: EarningExpense[]
+    declare categories: Category[]
 
-    @HasMany(() => EarningExtras, {
+    @HasMany(() => Supplier, {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
     })
-    declare earningExtras: EarningExtras[]
+    declare suppliers: Supplier[]
+
+    @HasMany(() => StockMovement, {
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+    })
+    declare stockMovements: StockMovement[]
 }
 
 export default User;
