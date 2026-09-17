@@ -18,10 +18,10 @@ const connectDB = async () => {
     try {
         await db.authenticate()
         db.sync() //Crea las tablas en automatico
-        
-        console.log(colors.bgGreen('Database connected'));  
+
+        console.log(colors.bgGreen('Database connected'));
     } catch (error) {
-        const err = new Error('Failed to connect to the database')
+        const err = new Error('Failed to connect to the database', error)
         console.log(colors.bgRed(err.message));
     }
 }
