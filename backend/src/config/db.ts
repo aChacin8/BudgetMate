@@ -1,13 +1,22 @@
 import { Sequelize } from "sequelize-typescript";
 import dotenv from 'dotenv';
+
 dotenv.config();
 
-const { DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, DB_DIALECT} = process.env;
+const databaseUrl = process.env.DATABASE_URL;
 
-export const db = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
-    models: [__dirname + '/../models/**/*'], 
-    host: DB_HOST,
-    dialect: DB_DIALECT as any,
-    logging: false
-})
+if (!databaseUrl) {
+    throw new Error("La variable de entorno DATABASE_URL no está definida");
+}
 
+export const db = new Sequelize(databaseUrl, {
+    dialect: 'postgres',
+    models: [__dirname + '/../models/**/*.js', __dirname + '/../models/**/*.ts'],
+    logging: false,
+    dialectOptions: {
+        ssl: {
+            require: true,
+            rejectUnauthorized: false
+        }
+    }
+});
