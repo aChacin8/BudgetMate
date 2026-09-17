@@ -8,7 +8,7 @@
     "dev": "nodemon src/index.ts",
     "dev:api": "nodemon src/index.ts --api",
     "build": "tsc",
-    "start": "node .dist/server.js"
+    "start": "node dist/index.ts"
   },
   "author": "Chacin Nava Alejandro Andres",
   "license": "ISC",
