@@ -12,10 +12,10 @@ export const confirmAccountValidation = async (req: Request, res: Response, next
 }
 
 export const resetTokenValidation = async (req: Request, res: Response, next: NextFunction) => {
-    await body ('token')
+    await body('token')
         .notEmpty().withMessage('Token is required')
         .isLength({ min: 6, max: 6 }).withMessage('Token must be 6 characters long')
         .run(req)
-    
+
     next();
 }
