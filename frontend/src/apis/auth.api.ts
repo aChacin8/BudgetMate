@@ -7,7 +7,6 @@ export interface LoginPayload { email: string; password: string }
 
 export const authApi = {
   register: (data: RegisterPayload) => http.post('/auth', data),
-  confirmAccount: (token: string) => http.post('/auth/confirm-account', { token }),
   login: (data: LoginPayload) => http.post<{ jwt: string }>('/auth/login', data),
   getUser: () => http.get('/auth/user'),
   forgotPassword: (email: string) => http.post('/auth/forgot-password', { email }),

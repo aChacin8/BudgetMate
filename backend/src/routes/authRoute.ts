@@ -5,7 +5,6 @@ import { handleInputErrors } from '../middlewares/hadleInputErrors';
 import { validateUserInput } from '../middlewares/auth/usersValidations';
 import { authValidation} from '../middlewares/auth/authValidation';
 import { checkPasswordValidation, forgotPasswordValidation, resetPasswordValidation, updatePasswordValidation } from '../middlewares/auth/passwordValidation'
-import { confirmAccountValidation, resetTokenValidation } from '../middlewares/auth/tokenValidations';
 import { getLimiter, postLimiter, tokenLimiter } from '../config/limiter';
 
 export const authRouter = express.Router();
@@ -17,12 +16,6 @@ authRouter.post('',
     AuthController.createUser
 )
 
-authRouter.post('/confirm-account', 
-    tokenLimiter,
-    confirmAccountValidation,
-    handleInputErrors,
-    AuthController.confirmAccount
-)
 
 authRouter.post('/login', 
     postLimiter,

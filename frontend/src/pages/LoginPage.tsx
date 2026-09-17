@@ -19,13 +19,7 @@ export default function LoginPage() {
       await login(res.data.jwt)
       navigate('/dashboard')
     } catch (err: any) {
-      const status = err.response?.status
-      const message = err.response?.data?.message || ''
-      if (status === 403 && message === 'Account not confirmed') {
-        navigate('/confirm-account', { state: { fromLogin: true, email: form.email } })
-        return
-      }
-      setError(message || 'Error al iniciar sesión')
+      setError(err.response?.data?.message || 'Error al iniciar sesión')
     } finally {
       setLoading(false)
     }

@@ -8,7 +8,6 @@ export default function RegisterPage() {
   const [form, setForm] = useState({ firstName: '', lastName: '', email: '', password: '', phone: '' })
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-  const [success, setSuccess] = useState(false)
 
   const parseError = (err: any): string => {
     const data = err.response?.data
@@ -21,7 +20,7 @@ export default function RegisterPage() {
     setError(''); setLoading(true)
     try {
       await authApi.register({ ...form, phone: form.phone || undefined })
-      setSuccess(true)
+      navigate('/login')
     } catch (err: any) {
       setError(parseError(err))
     } finally {
@@ -29,20 +28,6 @@ export default function RegisterPage() {
     }
   }
 
-  if (success) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-blue-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-900 flex items-center justify-center p-4 transition-colors">
-        <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-lg border border-gray-100 dark:border-gray-700 p-10 text-center max-w-md w-full">
-          <span className="text-5xl">📧</span>
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mt-4">¡Revisa tu correo!</h2>
-          <p className="text-gray-500 dark:text-gray-400 mt-2 text-sm">Te enviamos un código de confirmación. Ingrésalo para activar tu cuenta.</p>
-          <button onClick={() => navigate('/confirm-account')} className="mt-6 w-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-3 rounded-xl transition-colors">
-            Confirmar cuenta
-          </button>
-        </div>
-      </div>
-    )
-  }
 
   const f = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement>) => setForm({ ...form, [k]: e.target.value })
 
